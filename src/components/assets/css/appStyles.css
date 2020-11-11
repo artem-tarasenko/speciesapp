@@ -1,0 +1,20 @@
+button.MuiFab-root {
+    outline: none;
+}
+
+.article-list-fab .MuiFab-root {
+    width: 35px;
+    height: 35px;
+    box-shadow: none;
+    background-color: white;
+}
+
+.search {
+    padding: 0.3rem;
+    display: flex;
+}
+
+.search .btn {
+    height: 2.3rem;
+    padding: 0.4rem;
+}
