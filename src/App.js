@@ -1,5 +1,6 @@
 import './App.css';
 import './components/assets/css/dashboard.css';
+import './components/assets/css/appStyles.css';
 import "./components/assets/css/form-validation.css";
 import AdminPanel from "./components/adminPanel";
 

@@ -18,3 +18,14 @@ button.MuiFab-root {
     height: 2.3rem;
     padding: 0.4rem;
 }
+
+.search-min {
+    border: 0px;
+    border-bottom: 1px solid grey;
+    border-radius: 0px;
+    background-color: transparent;
+}
+
+.search-min:focus {
+    box-shadow: none;
+}

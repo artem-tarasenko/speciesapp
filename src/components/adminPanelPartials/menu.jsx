@@ -1,6 +1,8 @@
 import React from "react";
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import EditIcon from '@material-ui/icons/Edit';
 
 function Menu() {
 	return (
@@ -8,16 +10,25 @@ function Menu() {
 		  <div className="sidebar-sticky">
 		  	<div className="col">
 			  <h2>МЕНЮ</h2>
+			  <hr />
 		  	<form className="form-inline search d-flex">
-			  <input className="form-control col-md-8" type="search" placeholder="Search" aria-label="Search" />
+			  <input className="form-control col-md-8" type="search" placeholder="Поиск" aria-label="Search" />
 			  <div class="btn-group btn-group-toggle col-md-3" data-toggle="buttons">
 			  	<button className="btn btn-outline-secondary my-2 my-sm-0" type="submit"><SearchIcon /></button>
 				<button className="btn btn-outline-secondary my-2 my-sm-0" type="submit"><ClearIcon /></button>
 			  </div>
 			</form>
-			<h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-			  <span>СПИСОК РАЗДЕЛОВ</span>
-			</h6>
+			<hr />
+			<h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mb-1 text-muted">Управление разделами:</h6>
+			<div class="d-flex">
+			<form className="form-inline search d-flex">
+			  <input className="form-control col search-min" type="search" placeholder="Поиск #2" aria-label="Search" />
+			</form>
+			<span class="d-flex">
+					<a href="#" class="ml-2 text-secondary d-flex align-items-center" type="submit"><AddCircleOutlineIcon /></a>
+					<a href="#" class="ml-2 text-secondary d-flex align-items-center" type="submit"><EditIcon /></a>
+			</span>
+			</div>
 			<ul className="nav flex-column mb-5 menu-level-1 align-items-start">
 			  <li className="nav-item">
 				<a className="nav-link active" href="#">

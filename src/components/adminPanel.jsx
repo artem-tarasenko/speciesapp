@@ -1,16 +1,18 @@
 import React from "react";
 import Menu from "./adminPanelPartials/menu";
 import Body from "./adminPanelPartials/body";
+import ArticlesList from "./adminPanelPartials/articlesList";
 
 
 function AdminPanel() {
 	return (
 		<React.Fragment>
 
-			<div class="container-fluid">
-			     <div class="row">
+			<div className="container-fluid">
+			     <div className="row">
 					<Menu />
-					<Body />
+					{/* <Body /> */}
+					<ArticlesList />
 				</div>
 			</div>
 		</React.Fragment>
