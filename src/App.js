@@ -1,11 +1,12 @@
 import './App.css';
+import './components/assets/css/dashboard.css';
+import "./components/assets/css/form-validation.css";
+import AdminPanel from "./components/adminPanel";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-	  	<h2>Hello world</h2>
-      </header>
+      <AdminPanel />
     </div>
   );
 }
