@@ -1,6 +1,7 @@
 import React from "react";
 import Menu from "./adminPanelPartials/menu";
 import Body from "./adminPanelPartials/body";
+import TestingTree from "./adminPanelPartials/new-tree";
 import ArticlesList from "./adminPanelPartials/articlesList";
 
 
@@ -10,9 +11,7 @@ function AdminPanel() {
 
 			<div className="container-fluid">
 			     <div className="row">
-					<Menu />
-					{/* <Body /> */}
-					<ArticlesList />
+				 	<Menu />
 				</div>
 			</div>
 		</React.Fragment>

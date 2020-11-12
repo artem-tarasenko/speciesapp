@@ -2,7 +2,7 @@ import React from "react";
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import EditIcon from '@material-ui/icons/Edit';
+import ModalForm from "./modal"
 
 function Menu() {
 	return (
@@ -14,8 +14,12 @@ function Menu() {
 		  	<form className="form-inline search d-flex">
 			  <input className="form-control col-md-8" type="search" placeholder="Поиск" aria-label="Search" />
 			  <div class="btn-group btn-group-toggle col-md-3" data-toggle="buttons">
-			  	<button className="btn btn-outline-secondary my-2 my-sm-0" type="submit"><SearchIcon /></button>
-				<button className="btn btn-outline-secondary my-2 my-sm-0" type="submit"><ClearIcon /></button>
+			  	<div class="btn-group">
+			  		<button className="btn btn-outline-secondary my-2 my-sm-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<SearchIcon />
+					</button>
+					<button className="btn btn-outline-secondary my-2 my-sm-0" type="submit"><ClearIcon /></button>
+				</div>
 			  </div>
 			</form>
 			<hr />
@@ -25,8 +29,34 @@ function Menu() {
 			  <input className="form-control col search-min" type="search" placeholder="Поиск #2" aria-label="Search" />
 			</form>
 			<span class="d-flex">
-					<a href="#" class="ml-2 text-secondary d-flex align-items-center" type="submit"><AddCircleOutlineIcon /></a>
-					<a href="#" class="ml-2 text-secondary d-flex align-items-center" type="submit"><EditIcon /></a>
+				 <ModalForm icon={"add"} title={"Добавить новую категорию"}>
+					<form>
+						<div class="form-group">
+							<label for="categoryTitle">Заголовок категории</label>
+							<input type="text" class="form-control" id="categoryTitle" placeholder="Заголовок..." />
+						</div>
+						<div class="form-group">
+							<label for="categorySubtitle">Подзаголовок категории</label>
+							<input type="text" class="form-control" id="categorySubtitle" placeholder="Латынь..." />
+						</div>
+						<div class="form-group">
+							<label for="categoryParent">Выберете родителя</label>
+							<select class="form-control" id="categoryParent">
+								<option>Категория 1</option>
+								<option>Категория 1.2</option>
+								<option>Категория 2</option>
+								<option>Категория 2.1</option>
+								<option>Категория 2.2</option>
+							</select>
+						</div>
+					</form>
+				 </ModalForm>
+				 <ModalForm icon={"edit"} title={"Редактирование категорий"}>
+				 	<p>CATEGORY TREE HERE</p>
+
+
+
+				 </ModalForm>
 			</span>
 			</div>
 			<ul className="nav flex-column mb-5 menu-level-1 align-items-start">
@@ -112,6 +142,12 @@ function Menu() {
 			<div className="d-flex flex-column align-items-center">
 				<button className="btn btn-secondary col-md-9 mb-2 mt-2" type="submit">Список статей</button>
 				<button className="btn btn-secondary col-md-9 mb-2 mt-2" type="submit">Редактировать разделы</button>
+			</div>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="#">Action</a>
+				<a class="dropdown-item" href="#">Another action</a>
+				<a class="dropdown-item" href="#">Something else here</a>
+				<div class="dropdown-divider"></div>
 			</div>
 			</div>
 		  </div>
