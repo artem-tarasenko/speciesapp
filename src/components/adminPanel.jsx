@@ -1,7 +1,6 @@
 import React from "react";
 import Menu from "./adminPanelPartials/menu";
 import Body from "./adminPanelPartials/body";
-import TestingTree from "./adminPanelPartials/new-tree";
 import ArticlesList from "./adminPanelPartials/articlesList";
 
 
