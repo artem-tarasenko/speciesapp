@@ -1,6 +1,4 @@
 import React from "react";
-import AdminHeader from "./adminHeader";
-import Footer from "./footer";
 import Fab from "@material-ui/core/Fab";
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
@@ -11,9 +9,9 @@ function ArticlesList() {
     }
 
 	return (
-        <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+        <main role="main" className="col-xl-9">
         <div className="container-fluid">
-            <div className="d-flex flex-column align-items-start col-md-10">
+            <div className="d-flex flex-column align-items-start">
                 <h3>Список всех статей</h3>
                 <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
                 <hr />

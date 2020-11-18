@@ -2,6 +2,7 @@
 	outline: none;
 }
 
+
 button.MuiFab-root {
     outline: none;
 }
@@ -84,3 +85,30 @@ button.MuiFab-root {
     width: 100%;
     background-color: #cecece;
     border-radius: 10px 10px 0 0;}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+	color: white;
+}
+
+footer p {
+	margin-bottom: 0;
+}
+
+.navbar-brand {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #383838;
+    font-weight: 700;
+	background-color: transparent;
+	box-shadow: none;
+}
+
+a.nav-link {
+	text-transform: uppercase;
+}
