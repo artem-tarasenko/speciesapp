@@ -5,8 +5,6 @@ import Footer from "./footer";
 function Body() {
 	return (
 		<main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-			<AdminHeader />
-
 			<h2>Добавление новой статьи</h2>
 			<div className="container-fluid">
 				<div className="row">

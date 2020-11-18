@@ -11,6 +11,7 @@ import TreeMenu from 'react-simple-tree-menu';
 //Custom components
 import ModalForm from "./modal";
 import NewCategoryForm from "./newCatForm"
+
 // import CategoriesDataTemp from "../assets/tempData";
 import TempData from "./assets/tempData";
 
@@ -18,36 +19,10 @@ import TempData from "./assets/tempData";
 
 function Menu() {
 	return (
-		<nav className="col-md-2 d-none d-md-block bg-light sidebar">
-		  <div className="sidebar-sticky">
+
+		  <div className="">
 		  	<div className="col">
-				<h2>МЕНЮ</h2>
-				<hr />
-
-
-
-
-{/*
-//Rendering list styled with bootstrap
-
-				<ul className="nav flex-column mb-5 menu-level-1 align-items-start">
-			  <li className="nav-item">
-				<a className="nav-link active" href="#">
-				  <span data-feather="home"></span>
-				  Пункт 1 <span className="sr-only">(current)</span>
-				</a>
-			  </li>
-			  <ul className="nav flex-column menu-level-3 ml-4 align-items-start">
-			  	<li className="nav-item">
-			  	  <a className="nav-link active" href="#">
-			  		<span data-feather="home"></span>
-			  		Пункт 1 <span className="sr-only">(current)</span>
-			  	  </a>
-			  	</li>
-			  </ul>
-			</ul>
-*/}
-
+			<hr />
 			<TreeMenu data={TempData} />
 
 			<div class="d-flex">
@@ -76,8 +51,9 @@ function Menu() {
 
 			</div>
 		  </div>
-		</nav>
 	)
 }
+
+
 
 export default Menu;

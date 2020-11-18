@@ -12,7 +12,6 @@ function ArticlesList() {
 
 	return (
         <main role="main" className="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-        <AdminHeader />
         <div className="container-fluid">
             <div className="d-flex flex-column align-items-start col-md-10">
                 <h3>Список всех статей</h3>
