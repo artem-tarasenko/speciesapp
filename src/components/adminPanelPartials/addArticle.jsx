@@ -2,8 +2,8 @@ import React from "react";
 
 function Body() {
 	return (
-		<div className="col-xl-9 m-auto d-flex">
-			<div className="row mt-5 container-fluid">
+
+			<div className="row mt-5 container-fluid mb-5">
 				<div className="col">
 					<h4 className="d-flex justify-content-between align-items-center mb-3">
 						Параметры
@@ -95,7 +95,6 @@ function Body() {
 					</div>
 				</main>
 			</div>
-		</div>
 	)
 }
 

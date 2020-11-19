@@ -1,49 +1,40 @@
-import React from "react";
-import Fab from "@material-ui/core/Fab";
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import React , {useState} from "react";
+import SingleArticle from "./modules/singleArticle";
+import TempArticles from "./assets/tempArticles";
+
+
+
 
 function ArticlesList() {
+	const [isChoosen, setIsChoosen] = useState(false);
 
-    function submitNote(){
-
-    }
+	function articleIsChoosen(state) {
+		console.log("ArticleList module state now: " + isChoosen);
+		setIsChoosen(state);
+	}
 
 	return (
-        <main role="main" className="col-xl-9">
-        <div className="container-fluid">
-            <div className="d-flex flex-column align-items-start">
-                <h3>Список всех статей</h3>
-                <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-                <hr />
-                <nav className="navbar navbar-light bg-secondary col-md-12">
-                    <form className="form-inline">
-                        <input className="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" />
-                    </form>
-                </nav>
-                <div className="list-group-flush col-md-12">
-                    <li href="#" className="list-group-item d-flex justify-content-between">
-                        <a href="#" className="align-self-center">Caras justo odio</a>
-                        <span className="article-list-fab">
-                            <button type="button" className="btn btn-sm btn-outline-secondary mr-2">Удалить</button>
-                            {/* <a href="#" className="badge badge-danger">X</a> */}
-                            <Fab color="inherit" onClick={submitNote}>
-                                <DeleteOutlineIcon />
-                            </Fab>
-                        </span>
-                    </li>
-                    <li href="#" className="list-group-item  d-flex justify-content-between">
-                        <a href="#" className="align-self-center">Caras justo odio</a>
-                        <span className="article-list-fab">
-                            <button type="button" className="btn btn-sm btn-outline-secondary mr-2">Удалить</button>
-                            {/* <a href="#" className="badge badge-danger">X</a> */}
-                            <Fab color="inherit" onClick={submitNote}>
-                                <DeleteOutlineIcon />
-                            </Fab>
-                        </span>
-                    </li>
-                </div>
-            </div>
-        </div>
+        <main role="main" className="col-xl-9 mb-5">
+	        <div className="container-fluid">
+	            <div className="d-flex flex-column align-items-start">
+	                <h3>Список всех статей</h3>
+	                <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+	                <hr />
+					<p id="monitor">none</p>
+	                <nav className="navbar navbar-light bg-light col-md-12">
+	                    <form className="form-inline">
+	                        <input className="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" />
+	                    </form>
+	                </nav>
+	                <div className="list-group-flush col-md-12">
+						{TempArticles.map(article => {
+							return	<SingleArticle key={article.key} title={article.title} handleClick={articleIsChoosen}/>
+							})
+						}
+	                </div>
+					<div className="clearfix"></div>
+	            </div>
+	        </div>
         </main>
 	)
 }

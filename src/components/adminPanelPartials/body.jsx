@@ -9,6 +9,7 @@ function Body() {
 			<AdminPanel />
 			<ArticlesList />
 			</div>
+			
 		</React.Fragment>
 	)
 }

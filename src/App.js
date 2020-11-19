@@ -50,6 +50,7 @@ export default function App() {
 					<Home />
 				</Route>
 			</Switch>
+
 			<AdminFooter />
 		</Router>
 	</React.Fragment>
@@ -59,8 +60,9 @@ export default function App() {
 function Home() {
 	return (
 		<React.Fragment>
-		<div className="col-xl-9 m-auto d-flex">
+		<div className="col-xl-9 d-flex body-wrapper">
 			<Body />
+			<div class='push'></div>
 		</div>
 		</React.Fragment>
 	)
@@ -69,9 +71,10 @@ function Home() {
 function Add() {
   return (
 	  <React.Fragment>
-
+	  	<div className="col-xl-9 d-flex body-wrapper">
 			<AddArticle />
-
+			<div class='push'></div>
+		</div>
 	  </React.Fragment>
   )
 }
@@ -79,9 +82,11 @@ function Add() {
 function List() {
   return (
 	<React.Fragment>
-		<div className="col-xl-9 offset-xl-3 mt-5">
+		<div className="col-xl-9 offset-xl-3 mt-5 mb-5 body-wrapper">
 		  	<ArticlesList />
+			<div class='push'></div>
 		</div>
+
 	</React.Fragment>
   )
 }
