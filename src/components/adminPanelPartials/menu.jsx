@@ -18,10 +18,7 @@ import TempData from "./assets/tempData";
 
 
 function Menu() {
-	return (
 
-
-	)
 }
 
 

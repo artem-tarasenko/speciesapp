@@ -1,0 +1,112 @@
+:root {
+    --main-text-color: rgb(39, 65, 91);
+    --light-bg-color: #07B8F4;
+    --shadow-color: #2f2f2f;
+}
+
+
+@font-face {
+  font-family: 'Oswald';
+  src: url('/fonts/Oswald-Regular.woff') format('woff'); /* Modern Browsers */
+}
+
+* {
+    font-family: 'Oswald', 'Roboto', 'Lato', 'Monserrat', 'Open Sans', sans-serif;
+}
+
+html, body, #root {
+    height: 100%;
+}
+
+body {
+    background-image: url(/images/bg.jpg);
+    background-size: cover;
+}
+
+
+/*###   HEADER STYLES   #############################*/
+header {
+    font-family: 'Oswald', 'Roboto', 'Lato', 'Monserrat', 'Open Sans', sans-serif;
+    color: var(--main-text-color);
+    height: 140px;
+    margin-bottom: 20px;
+}
+
+img.logo {
+    height: 140px;
+    padding-left: 4%;
+    filter: drop-shadow(0 0 3px black);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    padding-top: 5px;
+}
+
+header h1 {
+    padding-right: 40px;
+}
+
+
+/*###   BODY STYLES   ################################*/
+/*---- SECTION STYLES ----*/
+main {
+    display: flex;
+    padding: 20px 60px;
+}
+section {
+    padding: 0 40px;
+    flex: 1;
+}
+
+section:first-of-type {
+    border-right: 3px solid #9BD6EA;
+}
+
+section:first-of-type h1 {
+    text-align: right;
+    margin-right: 25px;
+    color: var(--main-text-color);
+    font-size: 30px;
+}
+
+section h1 {
+    margin-left: 25px;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    color: var(--main-text-color);
+    font-size: 30px;
+}
+/*---- CATEGORIES STYLES ----*/
+
+.category {
+    margin: 10px;
+    background-color: var(--light-bg-color);
+    border-radius: 5px;
+    box-shadow: 0px 0 7px var(--shadow-color);
+}
+
+.label p {
+    padding: 3px 5px;
+    margin: 0;
+    font-size: 12px;
+    font-family: "Oswald", sans-serif;
+    color: white;
+}
+
+.image img {
+    height: 150px;
+    border-radius: 5px;
+    border: 2px solid #88B5E2;
+}
+
+/*###   FOOTER STYLES   #############################*/
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 60px;
+	color: white;
+}
