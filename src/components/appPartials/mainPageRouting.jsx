@@ -54,7 +54,7 @@ function Menu(props) {
 //######  DESCRIPTION  ##  This func can be moved to a separate file    #########
 function ShowDescription(props) {
     //props: parentID
-    let article = Articles.find(item => item.parent === props.parentID);
+    let article = ArticlesDB.find(item => item.parent === props.parentID);
 
     if (article) {
         return (
@@ -79,8 +79,6 @@ function Articles(props) {
                 <p>Parent Category ID is {props.parentID}</p>
                 <p>Has to render list of articles from DB2</p>
                 {/* <Link to={props.parent_id}{props.} >ARTICLE READ</Link> */}
-                <Link to={`${url}/:subcat_id`}>ARTICLE READ</Link>
-
             </section>
         </React.Fragment>
     )
