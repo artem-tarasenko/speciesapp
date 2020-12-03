@@ -50,6 +50,25 @@ header h1 {
 
 
 /*###   BODY STYLES   ################################*/
+/*---- NAVIGATION STYLES ----*/
+nav.sidebar {
+    flex: 0 0 300px;
+    text-align: right;
+    font-size: 26px;
+    padding: 0;
+}
+
+nav a {
+    color: var(--main-text-color);
+    text-transform: uppercase;
+}
+
+nav .active {
+    /* border-bottom: 2px solid var(--main-text-color); */
+    text-decoration: underline;
+}
+
+
 /*---- SECTION STYLES ----*/
 main {
     display: flex;
@@ -60,7 +79,7 @@ section {
     flex: 1;
 }
 
-section:first-of-type {
+section.front:first-of-type {
     border-right: 3px solid #9BD6EA;
 }
 
@@ -78,6 +97,8 @@ section h1 {
     color: var(--main-text-color);
     font-size: 30px;
 }
+
+
 /*---- CATEGORIES STYLES ----*/
 
 .category {
