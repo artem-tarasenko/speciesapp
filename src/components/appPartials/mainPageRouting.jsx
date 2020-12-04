@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import CategoryItem from "./categoryItem";
+import Menu from "./menu";
+import MenuHook from "./menuHook";
 import {Cats, SubcatsDB, ArticlesDB} from "./testdata";
 
 import {
@@ -15,41 +17,13 @@ import {
 
 
 
-
-
-//###############################################################################
-//######  MENU COMPONENT  ##  This func can be moved to a separate file    ######
-function Menu(props) {
-    //props: parentID; type(articles, categories, description)
-    let item, parent, link, title;
-
-    if (props.type === "description") {
-        //the whole article to parse
-        item = ArticlesDB.find(item => item.parent === props.parentID);
-        parent = Cats.find(item => item.id === props.parentID);
-        link = parent.id;
-        title = item.title;
-
-    } else if (props.type === "categories" || props.type === "articles") {
-        //only parent category to parse title for menu
-        item = Cats.find(item => item.id === props.parentID);
-        link = item.id;
-        title = item.title;
-
-    } else {
-        item = "UNDEFINED";
-    }
- 
+function TempComponent(props) {
     return (
-        <React.Fragment>
-            <nav className="sidebar container d-flex flex-column">
-                <Link to="/">HOME</Link>
-                <NavLink to={link} activeClassName="active">{title}</NavLink>
-            </nav>
-        </React.Fragment>
+        <p>Some temp content</p>
     )
 }
 
+//###############################################################################
 //###############################################################################
 //######  DESCRIPTION  ##  This func can be moved to a separate file    #########
 function ShowDescription(props) {
@@ -95,12 +69,12 @@ function ShowArticles(props) {
         <React.Fragment>
             <Switch>
                 <Route exact path={path}>
-                    <Articles 
+                    <Articles
                         parentID={props.parentID}
                     />
                 </Route>
                 <Route path={`${path}/:subcat_id`}>
-                    <TempComponent 
+                    <TempComponent
                         routerUrl={path}
                     />
                 </Route>
@@ -111,13 +85,7 @@ function ShowArticles(props) {
 
 //###############################################################################
 //######  SUBCATS  ##  This func can be moved to a separate file    #############
-function TempComponent(props) {
 
-    console.log("Router URL: " + props.routerUrl);
-    return (
-        <p>Some temp content</p>
-    )
-}
 
 function ShowSubcategories(props) {
     //props: parentID
@@ -125,7 +93,6 @@ function ShowSubcategories(props) {
     let { path, url } = useRouteMatch();
     //filter subcats base to collect only those that needed
     const filterdSubcats = SubcatsDB.filter( item => item.parent === props.parentID);
-    console.log(filterdSubcats);
     // let subcat = props.match.params.subcat_id;
 
     function render(item) {
@@ -133,10 +100,11 @@ function ShowSubcategories(props) {
             <React.Fragment>
                 <Router>
                     <Link to={`${url}/${item.id}`}>
-                        <CategoryItem 
+                        <CategoryItem
                             key={item.id}
                             itemTitle={item.title}
-                        /></Link>
+                        />
+					</Link>
                 </Router>
             </React.Fragment>
         )
@@ -158,7 +126,10 @@ function ShowSubcategories(props) {
                         </section>
                     </Route>
                     <Route path={`${path}/:subcat_id`}>
+
+						<MenuHook parentID={parentID}/>
                         <TempComponent />
+
                     </Route>
                 </Switch>
         </React.Fragment>
@@ -166,67 +137,72 @@ function ShowSubcategories(props) {
 
 
 }
-                        
+// <Menu
+// 	type="articles"
+// 	parentID={parentID}
+// />
 
 
 //###############################################################################
 //###############################################################################
-
+//						ROUTES
 //###############################################################################
 //###############################################################################
 
 //Conditional rendering of 1st level with menu, calling different components
 //for 3 types of the page that are needed. All require different switches and routes
-function MainPage(props) {
-    //Get menu-1 ID (parent) from passed props (cat_id)
-    let parentCategoryId = props.match.params.cat_id;
+function renderLevel1(props) {
+    //Get menu-1 ID (parent) from Router props (cat_id)
+    let currentID = props.match.params.cat_id;
     //find object in the array
-    let parentCategoryObj = Cats.find(item => item.id === parentCategoryId);
+    let parentCategoryObj = Cats.find(item => item.id === currentID);
 
-    //TESTING WHATS INSIDE
+    //TESTING WHATS INSIDE AND RENDER ACCORDINGLY
     if (parentCategoryObj.hasArticle) { //if hasArticle - render 1 page article
         console.log("Rendering description to category");
         return (
             <React.Fragment>
                 <main role="main" className="d-flex flex-direction-row flex-shring-0">
-                    <Menu 
+                    <Menu
                         type="description"
                         menuCategory
-                        parentID={parentCategoryId}
+                        parentID={currentID}
                     />
-                    <ShowDescription 
-                        parentID={parentCategoryId}
+                    <ShowDescription
+                        parentID={currentID}
+                    />
+                </main>
+            </React.Fragment>
+        )
+    }  else if (parentCategoryObj.hasItems) { //if hasItems - render article list
+        console.log("Render article list in this category");
+        return (
+            <React.Fragment>
+                <main role="main" className="d-flex flex-direction-row flex-shring-0">
+                    <Menu
+                        type="articles"
+                        parentID={currentID}
+                    />
+                    <ShowArticles
+                        parentID={currentID}
                     />
                 </main>
             </React.Fragment>
         )
     } else if (parentCategoryObj.hasSubcategories) { //if hasSubcats - render subcats from BD2
-        console.log("Render subcatigories for this category");
+        // console.log("Render subcatigories for this category");
         return (
             <React.Fragment>
                 <main role="main" className="d-flex flex-direction-row flex-shring-0">
-                    <Menu 
-                        type="categories"
-                        parentID={parentCategoryId}
-                    />
+					<Menu
+						type="categories"
+						parentID={currentID}
+					/>
                     <ShowSubcategories
-                        parentID={parentCategoryId}
-                    />
-                </main>
-            </React.Fragment>
-        )
-    } else if (parentCategoryObj.hasItems) { //if hasItems - render article list
-        console.log("Render article list in this category");
-        return (
-            <React.Fragment>
-                <main role="main" className="d-flex flex-direction-row flex-shring-0">
-                    <Menu 
-                        type="articles"
-                        parentID={parentCategoryId}
-                    />
-                    <ShowArticles 
-                        parentID={parentCategoryId}
-                    />
+                        parentID={currentID}
+                    >
+
+					</ShowSubcategories>
                 </main>
             </React.Fragment>
         )
@@ -234,12 +210,15 @@ function MainPage(props) {
 }
 
 //Function to render from array with map method
+//can be updated to render different components (article or category)
+//by checking (!item.content)
 function renderItems(item) {
+	//passed only "array item"
     return (
         <React.Fragment>
             <Router>
                 <Link to={item.id}>
-                    <CategoryItem 
+                    <CategoryItem
                         key={item.id}
                         itemTitle={item.title}
                     />
@@ -250,7 +229,7 @@ function renderItems(item) {
 }
 
 //Markup to render categories on main page from array
-function renderCategories() {
+function renderMainPage() {
     return (
         <React.Fragment>
             <main role="main" className="d-flex flex-direction-row flex-shring-0">
@@ -277,8 +256,8 @@ function Routing() {
         <React.Fragment>
             <Router>
                 <Switch>
-                    <Route exact path='/' component={renderCategories}/>
-                    <Route path='/:cat_id' component={MainPage}/>
+                    <Route exact path='/' component={renderMainPage}/>
+                    <Route path='/:cat_id' component={renderLevel1}/>
                     {/* <Route path='/:cat_id/:subcat_id' component={TempComponent}/> */}
                 </Switch>
             </Router>
