@@ -5,21 +5,36 @@ import MenuHook from "./menuHook";
 import {Cats, SubcatsDB, ArticlesDB} from "./testdata";
 
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Switch,
   Route,
   Link,
   NavLink,
   useParams,
+  useLocation,
   useRouteMatch
 } from "react-router-dom";
 
 
 
 
-function TempComponent(props) {
+function TempComponent({match}) {
+    let { path, url } = useRouteMatch();
+    // let { isExact, path, url} = match;
+
+
     return (
-        <p>Some temp content</p>
+        <React.Fragment>
+            <section>
+            <div className="d-flex justify-content-start flex-wrap flex-column">
+            <p>Showing articles from subcategory</p>
+            <p>useRouteMatch: path --- {path}, url --- {url}</p>
+            <p><Link tp="">ARTICLE 1</Link></p>
+            <p><Link tp="">ARTICLE 2</Link></p>
+            <p><Link tp="">ARTICLE 3</Link></p>
+            </div>
+            </section>
+        </React.Fragment>
     )
 }
 
@@ -29,6 +44,7 @@ function TempComponent(props) {
 function ShowDescription(props) {
     //props: parentID
     let article = ArticlesDB.find(item => item.parent === props.parentID);
+    
 
     if (article) {
         return (
@@ -46,6 +62,7 @@ function ShowDescription(props) {
 //###############################################################################
 function Articles(props) {
     let { path, url } = useRouteMatch();
+    
 
     return (
         <React.Fragment>
@@ -76,7 +93,9 @@ function ShowArticles(props) {
                 <Route path={`${path}/:subcat_id`}>
                     <TempComponent
                         routerUrl={path}
-                    />
+                        >
+                            <p>some text</p>
+                    </TempComponent>
                 </Route>
             </Switch>
         </React.Fragment>
@@ -95,30 +114,28 @@ function ShowSubcategories(props) {
     const filterdSubcats = SubcatsDB.filter( item => item.parent === props.parentID);
     // let subcat = props.match.params.subcat_id;
 
-    function render(item) {
+    function render(item, index) {
         return (
             <React.Fragment>
-                <Router>
-                    <Link to={`${url}/${item.id}`}>
+               
+                    <Link to={`${url}/${item.id}`} key={index}>
                         <CategoryItem
-                            key={item.id}
+                            
                             itemTitle={item.title}
                         />
 					</Link>
-                </Router>
+                
             </React.Fragment>
         )
     }
 
     return (
         <React.Fragment>
-
                 <Switch>
                     <Route exact path={path}>
                         <section>
                             <p>Parent Category ID is {props.parentID}</p>
-                            <p>Has to render subcategories</p>
-                                <div className="container d-flex justify-content-start flex-wrap">
+                                <div className="d-flex justify-content-start flex-wrap">
                                     {
                                         filterdSubcats.map(render)
                                     }
@@ -126,10 +143,9 @@ function ShowSubcategories(props) {
                         </section>
                     </Route>
                     <Route path={`${path}/:subcat_id`}>
-
-						<MenuHook parentID={parentID}/>
-                        <TempComponent />
-
+                        <TempComponent 
+                            parentID={"4"}
+                        />
                     </Route>
                 </Switch>
         </React.Fragment>
@@ -137,10 +153,7 @@ function ShowSubcategories(props) {
 
 
 }
-// <Menu
-// 	type="articles"
-// 	parentID={parentID}
-// />
+
 
 
 //###############################################################################
@@ -193,6 +206,7 @@ function renderLevel1(props) {
         // console.log("Render subcatigories for this category");
         return (
             <React.Fragment>
+                <Switch>
                 <main role="main" className="d-flex flex-direction-row flex-shring-0">
 					<Menu
 						type="categories"
@@ -204,6 +218,7 @@ function renderLevel1(props) {
 
 					</ShowSubcategories>
                 </main>
+                </Switch>
             </React.Fragment>
         )
     }
@@ -212,24 +227,24 @@ function renderLevel1(props) {
 //Function to render from array with map method
 //can be updated to render different components (article or category)
 //by checking (!item.content)
-function renderItems(item) {
+function renderItems(item, index) {
 	//passed only "array item"
     return (
         <React.Fragment>
-            <Router>
-                <Link to={item.id}>
+
+                <Link to={item.id} key={item.id}>
                     <CategoryItem
-                        key={item.id}
                         itemTitle={item.title}
                     />
                 </Link>
-            </Router>
+
         </React.Fragment>
     )
 }
 
 //Markup to render categories on main page from array
-function renderMainPage() {
+function renderMainPage({match}) {
+    console.log(match.params.cat_id);
     return (
         <React.Fragment>
             <main role="main" className="d-flex flex-direction-row flex-shring-0">

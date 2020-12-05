@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./components/appPartials/header";
 import Footer from "./components/appPartials/footer";
-import Categories from "./components/appPartials/mainPageRouting";
+import Categories from "./components/appPartials/TestRouting";
 
 
 export default function App() {
