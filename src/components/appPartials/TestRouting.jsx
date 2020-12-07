@@ -1,59 +1,23 @@
 import React, { useState } from "react";
 import {CategoriesDB, ArticlesDB} from "./testdata";
 
-import {
-  Switch,
-  Route,
-  Link,
-  NavLink,
-} from "react-router-dom";
+import {Switch, Route, Link, NavLink} from "react-router-dom";
 
 
 const Breadcrumbs = () => <Route path="*" render={props => {
     let parts = props.location.pathname.split("/"); //get all ID's from the path
     const place = parts[parts.length-1]; // save last one
-
-//==============================================================
-
-
 	parts = parts.slice(1, parts.length-1); //remove the last one from the array
-
-	console.log("========= Breadcrums ========");
-	// console.log("Place var ->");
-	// console.log(place);
-	// console.log("Parts array ->");
-	// console.log(parts);
-
-	let pathObject = [{link: "/", name: "RooT"}];
-	let lastCrumsItem;
-
-	//somewhere here I need to make an array of objects that containt proper names for ID's whether ID is cat or articles
-	if (parts.length > 0 || place > 0) {
-		console.log("parts exist");
-		if (parts.length < 1) {
-			//starting with PLACE variable
-			lastCrumsItem = CategoriesDB.find( item => item.id == place);
-		} else {
-			//must declare lastCrumsItem after first ID
-		}
-
-
-
-
-
-
-
-
-
-	} else {
-		console.log("parts EMPTY");
-	}
-
-
-
-//==============================================================
-
-
+    let lastCrumsItem; //variable for link label
+    //test if last ID in the path starts with "a" or not. If yes, then its an article
+    //with ID like "a2" and it should be found in ArticlesDB
+    //If not - ID is a number which means it's a category and could be found in Cat's DB
+    place.startsWith("a") && searchForItem(ArticlesDB);
+    !(place.startsWith("a")) && searchForItem(CategoriesDB);
+    
+    function searchForItem(source) {
+        lastCrumsItem = source.find( item => item.id == place)
+    }
 
     return (
 			<div className="nav-menu d-flex flex-column">
@@ -69,7 +33,27 @@ const Breadcrumbs = () => <Route path="*" render={props => {
 
 const crumb = (part, partIndex, parts) => {
         const path = ['', ...parts.slice(0, partIndex+1)].join("/");
-        return <p><Link key={path} to={path} >{part}</Link></p>}
+        let partName = "Unnamed link";
+        let sourceDB = CategoriesDB;
+
+        // console.group("conditions and result");
+        if (CategoriesDB.find(item => item.id == part).hasOwnProperty("subcategories")) {
+            // console.log("this one is with subcats!");
+            //get name in 1 source
+        } else if (CategoriesDB.find(item => item.id == part).hasOwnProperty("articles")) {
+            // console.log("this one with articles!");
+            //get name in 1 source
+        } else if (CategoriesDB.find(item => item.id == part).hasOwnProperty("description")) {
+            // console.log("this one with just a description!");
+            sourceDB = ArticlesDB;
+            //get name in 1 source
+        }
+        // console.groupEnd();
+
+        //look for a title
+        partName = sourceDB.find(item => item.id == part).title;
+
+        return <p><Link key={path} to={path} >{partName}</Link></p>}
 
 
 //============================================================================
@@ -124,7 +108,7 @@ function ConditionalContentRender(props) {
                             return (
                             <div>
                                 <Link key={articleId} to={`${match.url}/${articleId}`}>
-                                    {ArticlesDB.find(art => art.id === articleId).title} ---- *#*
+                                    {ArticlesDB.find(art => art.id == articleId).title} ---- *#*
                                 </Link>
                             </div>
                             );
@@ -140,9 +124,10 @@ function ConditionalContentRender(props) {
         )
     } else if (parent.hasOwnProperty("description")) {
         // console.log("ConditionalContentRender(): rendering description...");
-		let descArticle;
-		if (parent.description <= ArticlesDB.length) {
-			descArticle = ArticlesDB.find( item => item.id == parent.description);
+        let descArticle;
+        let idSubtracted = parent.description[0].split("a");
+		if (idSubtracted[1] <= ArticlesDB.length) {
+            descArticle = ArticlesDB.find( item => item.id == parent.description);
 	        return (
 				<>
 					<section className="container">
@@ -176,7 +161,7 @@ function ConditionalContentRender(props) {
 //============================  SINGLE ARTICLE  ==============================
 function Article({match}) {
     //getting what needs to be rendered
-    const article = ArticlesDB.find( art => parseInt(match.params.article) === art.id );
+    const article = ArticlesDB.find( art => match.params.article == art.id );
 
     return (
         <>
