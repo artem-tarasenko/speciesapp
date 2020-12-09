@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import {CategoriesDB, ArticlesDB} from "./testdata";
 
-import {Switch, Route, Link, NavLink} from "react-router-dom";
+import {Switch, Route, Link} from "react-router-dom";
+
+import Home from "./Home";
 
 
 const Breadcrumbs = () => <Route path="*" render={props => {
@@ -32,28 +34,31 @@ const Breadcrumbs = () => <Route path="*" render={props => {
 />
 
 const crumb = (part, partIndex, parts) => {
-        const path = ['', ...parts.slice(0, partIndex+1)].join("/");
-        let partName = "Unnamed link";
-        let sourceDB = CategoriesDB;
+    const path = ['', ...parts.slice(0, partIndex+1)].join("/");
+    let partName = "Unnamed link";
+    let sourceDB = CategoriesDB;
 
-        // console.group("conditions and result");
-        if (CategoriesDB.find(item => item.id == part).hasOwnProperty("subcategories")) {
-            // console.log("this one is with subcats!");
-            //get name in 1 source
-        } else if (CategoriesDB.find(item => item.id == part).hasOwnProperty("articles")) {
-            // console.log("this one with articles!");
-            //get name in 1 source
-        } else if (CategoriesDB.find(item => item.id == part).hasOwnProperty("description")) {
-            // console.log("this one with just a description!");
-            sourceDB = ArticlesDB;
-            //get name in 1 source
-        }
-        // console.groupEnd();
+    // console.group("conditions and result");
+    if (CategoriesDB.find(item => item.id == part).hasOwnProperty("subcategories")) {
+        // console.log("this one is with subcats!");
+        //get name in 1 source
+    } else if (CategoriesDB.find(item => item.id == part).hasOwnProperty("articles")) {
+        // console.log("this one with articles!");
+        //get name in 1 source
+    } else if (CategoriesDB.find(item => item.id == part).hasOwnProperty("description")) {
+        // console.log("this one with just a description!");
+        sourceDB = ArticlesDB;
+        //get name in 1 source
+    }
+    // console.groupEnd();
 
-        //look for a title
-        partName = sourceDB.find(item => item.id == part).title;
+    //look for a title
+    partName = sourceDB.find(item => item.id == part).title;
 
-        return <p><Link key={path} to={path} >{partName}</Link></p>}
+    return <p>
+        <Link key={path} to={path} >{partName}</Link>
+        </p>
+}
 
 
 //============================================================================
@@ -209,32 +214,6 @@ function Category({match}) {
     )
 }
 
-//============================================================================
-//=========================   RENDER LEVEL 1 PAGE  ===========================
-//==============================  CATEGORIES  ================================
-function Home({match}) {
-    const rootCategory = CategoriesDB.find(item => item.id == 0);
-    let rootCategories = rootCategory.subcategories.map(subcatID => CategoriesDB.find(item => item.id == subcatID));
-
-    return (
-        <>
-            <section className="container">
-                <h3>{rootCategory.title}</h3>
-                <hr />
-                {rootCategories.map(subCat => {
-                    return (
-                    <div key={subCat.id}>
-                        <Link to={`${subCat.id}`}>
-                            {CategoriesDB.find(cat => cat.id === subCat.id).title} ***
-                        </Link>
-                    </div>
-                    );
-                })}
-            </section>
-        </>
-
-    )
-}
 
 
 //============================================================================
