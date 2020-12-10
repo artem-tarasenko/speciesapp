@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {Switch, Route, Link} from "react-router-dom";
 import {Subcategory, Article} from "./ContentRouting"
+import CategoryItem from "./CategoryItem";
+import RenderSingleArticle from "./RenderSingleArticle";
 
 const useFetch = url => {
     const [data, setData] = useState(null);
@@ -19,98 +21,81 @@ const useFetch = url => {
 
 function ConditionalContentRender(props) {
 	const data = useFetch("http://localhost:1337/" + props.type);
-
 	let match = props.match;
 
 	if (!data) {
-	   return <section className="container"><p>Wait, loading...</p></section>
-   } else {
-	   	let parent = data.find( item => item.id === match.params.category);
+		return <section className="container"><p>Wait, loading...</p></section>
+	} else {
+		let test = match.url.split("/"); 
+		let parent = data.find( item => item.id === test[test.length - 1]);
+		  
+		// console.groupCollapsed("DEBUGING CONDITIONAL RENDER")
+			// console.log("Parent variable before checking conditions what does it have");
+			// console.log(parent);
+			// console.log("props.match");
+			// console.log(match);
+			// console.log("Trying to get last ID from match params url");
+			// console.log(match.url.split("/"));
+			// console.log(test);
+		// console.groupEnd();
 
-	   	if (parent.hasOwnProperty("subcategories")) {
-			console.log("ConditionalContentRender(): rendering subcategories...");
+	   	if (parent.subcategories.length > 0) {
+			//console.log("ConditionalContentRender(): rendering subcategories...");
 			return (
-			   <>
-			       {match.isExact && (
-			           <>
+				<>
+					{match.isExact && (
+						<>
 							<section className="container">
-			               	<h3>{parent.title}</h3>
-			               	<hr />
-				               {parent.subcategories.map( subcat => {
-				                   return (
-				                   <div>
-				                       <Link key={subcat.id} to={`${match.url}/${subcat.id}`}>
-				                       	{subcat.title}
-				                       </Link>
-				                   </div>
-				                   );
-				               })}
+								<h3>{parent.title}</h3>
+								<hr />
+								<div className="d-flex d-row flex-wrap">
+									{parent.subcategories.map( obj => <CategoryItem key={obj.id} category={obj} url={`${match.url}/${obj.id}`} /> )}
+								</div>
 							</section>
-			           </>
-			       )}
-			       <Switch>
-			           <Route path={`${match.path}/:subcategory`} component={Subcategory} />
-			       </Switch>
-			   </>
+						</>
+					)}
+					<Switch>
+						<Route path={`${match.path}/:subcategory`} component={Subcategory} />
+					</Switch>
+				</>
 			)
-    	} else if (parent.hasOwnProperty("articles")) {
-           // console.log("ConditionalContentRender(): rendering articles...");
-           	return (
-               <>
-   				{match.isExact && (
-   					<>
-   						<section className="container">
-                           <h3>{parent.title}</h3>
-                           <hr />
-                           {parent.articles.map(articleId => {
-                               return (
-                               <div>
-                                   <Link key={articleId} to={`${match.url}/${articleId}`}>
-                                       {data.find(art => art.id === articleId).title}
-                                   </Link>
-                               </div>
-                               );
-                           })}
-   						</section>
-   					</>
-   				)}
-                   <Switch>
-                       <Route path={`${match.path}/:article`} component={Article} />
-                   </Switch>
-               </>
-           	)
-    	} else if (parent.hasOwnProperty("description")) {
-           	// console.log("ConditionalContentRender(): rendering description...");
-           	let idSubtracted = parent.description[0].split("a");
-   			if (idSubtracted[1] <= data.length) {
-               	const article = data.find( item => item.id === parent.description);
-   	        	return (
-	   				<>
-	   					<section className="container">
-	   	                    <h3>{article.title}</h3>
-	   	                    <hr />
-	   	                    <p>Some text here from {article.title}</p>
-	   	                    <p>{article.subtitle}</p>
-	   						<p>{article.content}</p>
-	   					</section>
-	   				</>
-   				)
-			}
-   		} else {
-   			console.log("Parent category does not have any description, or article does not found");
-			console.log(parent);
-   			return (
-   				<>
-					<section className="container">
-   					<h3>Something went wrong!</h3>
-   					<hr />
-   					<p>Parent category does not have any description, or article was not found</p>
-					</section>
-   				</>
-   			)
-   		}
+		} else if (parent.articles.length > 0) {
+			//console.log("ConditionalContentRender(): rendering articles...");
+			return (
+				<>
+				{match.isExact && (
+					<>
+						<section className="container">
+							<h3>{parent.title}</h3>
+							<hr />
+							<div className="d-flex d-row flex-wrap">
+								{parent.articles.map( obj => <CategoryItem key={obj.id} category={obj} url={`${match.url}/${obj.id}`} /> )}
+							</div>
+						</section>
+					</>
+				)}
+					<Switch>
+						<Route path={`${match.path}/:article`} component={Article} />
+					</Switch>
+				</>
+			)
+		} else if (parent.hasOwnProperty("description")) {
+			//console.log("ConditionalContentRender(): rendering description...");
+			return <RenderSingleArticle article={parent.description} />
 
-		return 	<section className="container"><h3>{parent.title}</h3><p>{parent.content}</p></section>;
+		} else {
+			console.log("Parent category does not have any description, or article does not found");
+			console.log(parent);
+			return (
+				<>
+					<section className="container">
+					<h3>Something went wrong!</h3>
+					<hr />
+					<p>Parent category does not have any description, or article was not found</p>
+					</section>
+				</>
+			)
+		}
 	}
 }
 

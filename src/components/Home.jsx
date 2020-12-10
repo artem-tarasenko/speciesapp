@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-
+import CategoryItem from "./CategoryItem";
 
 
 //============================================================================
@@ -28,23 +27,26 @@ function Home() {
      if (!data) {
         return <section className="container"><p>Wait, loading...</p></section>
     } else {
-        let rootId = "5fd17a2a9af901587864d1cf";
-        const rootCategory = data.find(item => item.id === rootId);
+        let firstPartTitle = "ТРОПИЧЕСКИЙ ЗАЛ";
+        let secondPartTitle = "ДАЛЬНЕВОСТОЧНЫЙ ЗАЛ";
+        const firstRootCategory = data.find(item => item.title === firstPartTitle);
+        const secondRootCategory = data.find(item => item.title === secondPartTitle);
 
         return (
             <>
                 <section className="container">
-                    <h3>{rootCategory.title}</h3>
+                    <h3>{firstRootCategory.title}</h3>
                     <hr />
-                    {rootCategory.subcategories.map(subCat => {
-                        return (
-                        <div key={subCat.id}>
-                            <Link to={`${subCat.id}`}>
-                                {data.find(cat => cat.id === subCat.id).title}
-                            </Link>
-                        </div>
-                        );
-                    })}
+                    <div className="d-flex d-row flex-wrap">
+                        {firstRootCategory.subcategories.map(subCat => <CategoryItem key={subCat.id} url={subCat.id} category={subCat} /> )}
+                    </div>
+                </section>
+                <section className="container">
+                    <h3>{secondRootCategory.title}</h3>
+                    <hr />
+                    <div className="d-flex d-row flex-wrap">
+                        {secondRootCategory.subcategories.map(subCat => <CategoryItem key={subCat.id} url={subCat.id} category={subCat} /> )}
+                    </div>
                 </section>
             </>
         )
