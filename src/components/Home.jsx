@@ -6,6 +6,7 @@ import CategoryItem from "./CategoryItem";
 //=========================   RENDER LEVEL 1 PAGE  ===========================
 //==============================  CATEGORIES  ================================
 
+//fetch data from URL passed by calling func, with effect hook should be updated only when on URL change
 const useFetch = url => {
     const [data, setData] = useState(null);
 
@@ -21,31 +22,40 @@ const useFetch = url => {
 }
 
 function Home() {
-
+    //getting starting data from mongo / API
     const data = useFetch("http://localhost:1337/categories");
 
-     if (!data) {
+    //short conditional to prevent the following code from executing before getting data from API
+	//since it's based on data object
+    if (!data) {
         return <section className="container"><p>Wait, loading...</p></section>
     } else {
+        //setting up root categories to render 1st level with categories for 2 parts
         let firstPartTitle = "ТРОПИЧЕСКИЙ ЗАЛ";
         let secondPartTitle = "ДАЛЬНЕВОСТОЧНЫЙ ЗАЛ";
         const firstRootCategory = data.find(item => item.title === firstPartTitle);
         const secondRootCategory = data.find(item => item.title === secondPartTitle);
 
+        //mapping through arrays with children categories to render each one as a component with props
+        //params: url - for Router Link; category - a source object for component to work with
         return (
             <>
                 <section className="container">
                     <h3>{firstRootCategory.title}</h3>
                     <hr />
                     <div className="d-flex d-row flex-wrap">
-                        {firstRootCategory.subcategories.map(subCat => <CategoryItem key={subCat.id} url={subCat.id} category={subCat} /> )}
+                        {firstRootCategory.subcategories.map(subCat => 
+                            <CategoryItem key={subCat.id} url={subCat.id} category={subCat} /> 
+                        )}
                     </div>
                 </section>
                 <section className="container">
                     <h3>{secondRootCategory.title}</h3>
                     <hr />
                     <div className="d-flex d-row flex-wrap">
-                        {secondRootCategory.subcategories.map(subCat => <CategoryItem key={subCat.id} url={subCat.id} category={subCat} /> )}
+                        {secondRootCategory.subcategories.map(subCat => 
+                            <CategoryItem key={subCat.id} url={subCat.id} category={subCat} /> 
+                        )}
                     </div>
                 </section>
             </>

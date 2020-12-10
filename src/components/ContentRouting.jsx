@@ -56,18 +56,18 @@ function Breadcrumbs() {
             }
 
 
-            console.group("Breadbrubms pieces");
-            console.log("place - ID of current item");
-            console.log(place);
-            console.log("lastCrumsItem - that should contain NAME of current element");
-            console.log(lastCrumsItem);
-            console.log("props.location.pathname - full path from Router");
-            console.log(props.location.pathname);
-            console.log("parts array - should have ID's from pathname after slicing empty ones");
-            console.log(parts);
-            console.log("API data from Strapi recieved for Router (categories array)");
-            console.log(data);
-            console.groupEnd();
+            // console.group("Breadbrubms pieces");
+            // console.log("place - ID of current item");
+            // console.log(place);
+            // console.log("lastCrumsItem - that should contain NAME of current element");
+            // console.log(lastCrumsItem);
+            // console.log("props.location.pathname - full path from Router");
+            // console.log(props.location.pathname);
+            // console.log("parts array - should have ID's from pathname after slicing empty ones");
+            // console.log(parts);
+            // console.log("API data from Strapi recieved for Router (categories array)");
+            // console.log(data);
+            // console.groupEnd();
 
             //--------------------
 
