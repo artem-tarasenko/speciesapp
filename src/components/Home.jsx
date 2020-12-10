@@ -26,9 +26,9 @@ function Home() {
     const data = useFetch("http://localhost:1337/categories");
 
      if (!data) {
-        return <p>loading...</p>
+        return <section className="container"><p>Wait, loading...</p></section>
     } else {
-        let rootId = "5fd0e2b10789a677dccc9883";
+        let rootId = "5fd17a2a9af901587864d1cf";
         const rootCategory = data.find(item => item.id === rootId);
 
         return (

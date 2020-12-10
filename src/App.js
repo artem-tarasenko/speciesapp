@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./components/header";
 import Footer from "./components/footer";
-import Categories from "./components/TestRouting";
+import {ContentRouting as Content} from "./components/ContentRouting";
 
 
 
@@ -9,7 +9,7 @@ export default function App() {
   return (
 	<React.Fragment>
         <Header />
-        <Categories />
+        <Content />
         <Footer />
     </React.Fragment>
   )
