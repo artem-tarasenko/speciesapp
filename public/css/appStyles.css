@@ -51,46 +51,56 @@ header h1 {
 
 /*###   BODY STYLES   ################################*/
 /*---- NAVIGATION STYLES ----*/
-nav.sidebar {
-    flex: 0 0 300px;
+.nav-menu {
+	flex: 0 0 360px;
     text-align: right;
-    font-size: 26px;
-    padding: 0;
+    font-size: 25px;
+    padding: 0 18px 0 0;
+    border-right: 5px solid rgb(7 184 244 / 46%);
 }
 
-nav a {
+nav a, nav p.link {
     color: var(--main-text-color);
     text-transform: uppercase;
 }
+nav p {
+	min-height: 42px;
+}
 
 nav .active {
-    /* border-bottom: 2px solid var(--main-text-color); */
-    text-decoration: underline;
+    border-bottom: 4px solid var(--main-text-color);
+	display: inline;
+    padding-bottom: 2px;
 }
 
 
 /*---- SECTION STYLES ----*/
-main {
+.main {
     display: flex;
     padding: 20px 60px;
+	min-height: 75%;
 }
 section {
     padding: 0 40px;
     flex: 1;
 }
 
-section.front:first-of-type {
+section.container {
+	padding: 10px 20px;
+}
+
+section.container.right {
     border-right: 3px solid #9BD6EA;
 }
 
-section:first-of-type h1 {
+section.container.right h3 {
     text-align: right;
     margin-right: 25px;
     color: var(--main-text-color);
     font-size: 30px;
 }
 
-section h1 {
+section h3 {
     margin-left: 25px;
     font-family: "Oswald", sans-serif;
     text-transform: uppercase;
@@ -102,7 +112,7 @@ section h1 {
 /*---- CATEGORIES STYLES ----*/
 
 .category {
-    margin: 10px;
+    margin: 17px;
     background-color: var(--light-bg-color);
     border-radius: 5px;
     box-shadow: 0px 0 7px var(--shadow-color);
@@ -111,15 +121,39 @@ section h1 {
 .label p {
     padding: 3px 5px;
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
     font-family: "Oswald", sans-serif;
     color: white;
+	text-transform: uppercase;
 }
 
 .image img {
     height: 150px;
     border-radius: 5px;
     border: 2px solid #88B5E2;
+}
+.content.categories {
+	padding: 0 160px 0 40px;
+}
+
+
+/*---- ARTICLE STYLES ----*/
+.content {
+	min-height: 75%;
+}
+.content h2 {
+	text-transform: uppercase;
+	color: var(--main-text-color);
+}
+
+.content h4 {
+	font-style: italic;
+	color: var(--main-text-color);
+}
+
+/*---- ARTICLE GALLERY STYLES ----*/
+.gallery {
+
 }
 
 /*###   FOOTER STYLES   #############################*/
@@ -128,6 +162,10 @@ section h1 {
     position: absolute;
     bottom: 0;
     width: 100%;
-    line-height: 60px;
-	color: white;
+    line-height: 40px;
+	color: var(--main-text-color);
+}
+
+.footer svg {
+	margin-right: 10px;
 }

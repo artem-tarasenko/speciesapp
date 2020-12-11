@@ -26,9 +26,9 @@ function ConditionalContentRender(props) {
 	if (!data) {
 		return <section className="container"><p>Wait, loading...</p></section>
 	} else {
-		let test = match.url.split("/"); 
+		let test = match.url.split("/");
 		let parent = data.find( item => item.id === test[test.length - 1]);
-		  
+
 		// console.groupCollapsed("DEBUGING CONDITIONAL RENDER")
 			// console.log("Parent variable before checking conditions what does it have");
 			// console.log(parent);
@@ -45,9 +45,7 @@ function ConditionalContentRender(props) {
 				<>
 					{match.isExact && (
 						<>
-							<section className="container">
-								<h3>{parent.title}</h3>
-								<hr />
+							<section className="content categories">
 								<div className="d-flex d-row flex-wrap">
 									{parent.subcategories.map( obj => <CategoryItem key={obj.id} category={obj} url={`${match.url}/${obj.id}`} /> )}
 								</div>
@@ -65,9 +63,7 @@ function ConditionalContentRender(props) {
 				<>
 				{match.isExact && (
 					<>
-						<section className="container">
-							<h3>{parent.title}</h3>
-							<hr />
+						<section className="content categories">
 							<div className="d-flex d-row flex-wrap">
 								{parent.articles.map( obj => <CategoryItem key={obj.id} category={obj} url={`${match.url}/${obj.id}`} /> )}
 							</div>
@@ -88,7 +84,7 @@ function ConditionalContentRender(props) {
 			console.log(parent);
 			return (
 				<>
-					<section className="container">
+					<section className="content">
 					<h3>Something went wrong!</h3>
 					<hr />
 					<p>Parent category does not have any description, or article was not found</p>

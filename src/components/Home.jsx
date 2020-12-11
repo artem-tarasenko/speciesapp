@@ -31,6 +31,7 @@ function Home() {
         return <section className="container"><p>Wait, loading...</p></section>
     } else {
         //setting up root categories to render 1st level with categories for 2 parts
+		console.log(data);
         let firstPartTitle = "ТРОПИЧЕСКИЙ ЗАЛ";
         let secondPartTitle = "ДАЛЬНЕВОСТОЧНЫЙ ЗАЛ";
         const firstRootCategory = data.find(item => item.title === firstPartTitle);
@@ -40,21 +41,19 @@ function Home() {
         //params: url - for Router Link; category - a source object for component to work with
         return (
             <>
-                <section className="container">
+                <section className="container right">
                     <h3>{firstRootCategory.title}</h3>
-                    <hr />
                     <div className="d-flex d-row flex-wrap">
-                        {firstRootCategory.subcategories.map(subCat => 
-                            <CategoryItem key={subCat.id} url={subCat.id} category={subCat} /> 
+                        {firstRootCategory.subcategories.map(subCat =>
+                            <CategoryItem key={subCat.id} url={subCat.id} category={subCat} />
                         )}
                     </div>
                 </section>
-                <section className="container">
+                <section className="container left">
                     <h3>{secondRootCategory.title}</h3>
-                    <hr />
                     <div className="d-flex d-row flex-wrap">
-                        {secondRootCategory.subcategories.map(subCat => 
-                            <CategoryItem key={subCat.id} url={subCat.id} category={subCat} /> 
+                        {secondRootCategory.subcategories.map(subCat =>
+                            <CategoryItem key={subCat.id} url={subCat.id} category={subCat} />
                         )}
                     </div>
                 </section>

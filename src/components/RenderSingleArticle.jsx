@@ -17,14 +17,14 @@ const useFetch = url => {
 
 
 function RenderSingleArticle(props) {
-	//props  ###  match - object from Router with some data ###  article - source object  ###   
+	//props  ###  match - object from Router with some data ###  article - source object  ###
 	//getting starting data from mongo through Strapi API
 	const data = useFetch("http://localhost:1337/articles");
-	
+
 	//short conditional to prevent the following code from executing before getting data from API
 	//since it's based on data object
 	if (!data) {
-		return <section className="container"><p>Wait, loading...</p></section>
+		return <section className="content"><p>Wait, loading...</p></section>
 	} else {
 		let article;
 		//conditional to allow the component to be used with different props (either parent ID or target category object)
@@ -36,11 +36,13 @@ function RenderSingleArticle(props) {
 
 		return (
 			<>
-			<section className="container">
-				<h3>{article.title}</h3>
-				<p>{article.subtitle}</p>
+			<section className="content d-flex flex-column">
+				<h2>{article.title}</h2>
+				<h4>{article.subtitle}</h4>
 				<hr />
 				<ReactMarkdown children={article.content} />
+				<div className="gallery mt-auto"><p>gallery here</p>
+				</div>
 			</section>
 			</>
 		)

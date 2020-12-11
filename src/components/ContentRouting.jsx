@@ -27,7 +27,7 @@ function Breadcrumbs() {
 	if (!data) {
 		return <section className="container"><p>Wait, loading...</p></section>
 	} else {
-        
+
         return <Route path="*" render={props => {
             let parts = props.location.pathname.split("/"); //get all ID's from the path
             const place = parts[parts.length-1]; // save last one
@@ -72,16 +72,16 @@ function Breadcrumbs() {
             //--------------------
 
             return (
-                    <div className="nav-menu d-flex flex-column">
+                    <nav className="nav-menu d-flex flex-column">
                         <div className="container">
                             <p><Link to="/" >ГЛАВНАЯ</Link></p>
                             {parts.map(Crumb)}
                             <p className="active link">{lastCrumsItem && lastCrumsItem.title}</p>
                         </div>
-                    </div>
+                    </nav>
                 )
             }}
-        
+
         />
     }
 
