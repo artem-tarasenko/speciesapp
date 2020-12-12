@@ -77,7 +77,7 @@ nav .active {
 /*---- SECTION STYLES ----*/
 .main {
     display: flex;
-    padding: 20px 60px;
+    padding: 0px 60px;
 	min-height: 75%;
 }
 section {
@@ -86,7 +86,8 @@ section {
 }
 
 section.container {
-	padding: 10px 20px;
+    padding: 10px 20px;
+    max-width: 900px;
 }
 
 section.container.right {
@@ -112,7 +113,7 @@ section h3 {
 /*---- CATEGORIES STYLES ----*/
 
 .category {
-    margin: 17px;
+    margin: 16px;
     background-color: var(--light-bg-color);
     border-radius: 5px;
     box-shadow: 0px 0 7px var(--shadow-color);
@@ -126,20 +127,38 @@ section h3 {
     color: white;
 	text-transform: uppercase;
 }
+.label span {
+    margin: 0px 5px 3px 5px;
+    padding: 2px 6px;
+    background: rgb(255 255 255 / 88%);
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 2px 4px rgb(21 21 60 / 76%);
+}
 
 .image img {
-    height: 150px;
+    height: 160px;
+    width: 252px;
     border-radius: 5px;
-    border: 2px solid #88B5E2;
+    box-shadow: 0px 2px 2px rgb(23 22 51 / 31%), 0px 6px 8px rgb(23 22 51 / 22%);
+    border: 2px solid rgb(255 255 255 / 88%);
 }
 .content.categories {
-	padding: 0 160px 0 40px;
+	padding: 0 0px 0 40px;
 }
 
 
 /*---- ARTICLE STYLES ----*/
 .content {
-	min-height: 75%;
+    min-height: 75%;
+    max-width: 1200px;
+}
+
+.content .title-wrapper span {
+    font-size: 1.7rem;
+    border: 3px solid var(--main-text-color);
+    border-radius: 5px;
+    padding: 0px 15px;
+    color: var(--main-text-color);
 }
 .content h2 {
 	text-transform: uppercase;
@@ -151,9 +170,21 @@ section h3 {
 	color: var(--main-text-color);
 }
 
+.content.article p {
+    font-family: 'Lato', 'Monserrat', 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.4rem;
+    color: var(--main-text-color);
+}
+
 /*---- ARTICLE GALLERY STYLES ----*/
 .gallery {
 
+}
+
+.gallery img {
+    height: 160px;
+    margin: 10px 20px;
 }
 
 /*###   FOOTER STYLES   #############################*/

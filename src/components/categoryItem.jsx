@@ -15,13 +15,14 @@ export default function CategoryItem(props) {
 
     return (
         <React.Fragment>
-			<div className="category mr-auto">
+			<div className="category">
 				<Link to={props.url}>
 					<div className="image">
 						<img src={link} />
 					</div>
-					<div className="label">
+					<div className="label d-flex flex-row justify-content-between">
 						<p>{props.category.title}</p>
+						{props.category.number && <span>{props.category.number}</span>}
 					</div>
 				</Link>
 			</div>

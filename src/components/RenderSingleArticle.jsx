@@ -1,5 +1,32 @@
 import React, { useState, useEffect } from "react";
-import ReactMarkdown from 'react-markdown';
+import SimpleReactLightbox from "simple-react-lightbox";
+import { SRLWrapper } from "simple-react-lightbox";
+import ReactMarkdown from "react-markdown";
+
+//a set of options declared for Ligthbox gallery, full list on NpmJs - simple react lightbox
+const options = {
+  settings: {
+    overlayColor: "rgb(30 36 43 / 91%);",
+    autoplaySpeed: 1500,
+	transitionSpeed: 900,
+	hideControlsAfter: false,
+
+  },
+  buttons: {
+    backgroundColor: "#1b5245",
+	iconColor: "rgba(126, 172, 139, 0.8)",
+	showAutoplayButton: false,
+	showDownloadButton: false,
+	showFullscreenButton: false,
+	showThumbnailsButton: false
+  },
+  caption: {
+    captionColor: "#a6cfa5",
+    captionFontFamily: "Raleway, sans-serif",
+    captionFontWeight: "300",
+    captionTextTransform: "uppercase",
+  }
+};
 
 //fetch data from URL passed by calling func, with effect hook should be updated only when on URL change
 const useFetch = url => {
@@ -36,14 +63,29 @@ function RenderSingleArticle(props) {
 
 		return (
 			<>
-			<section className="content d-flex flex-column">
-				<h2>{article.title}</h2>
-				<h4>{article.subtitle}</h4>
-				<hr />
-				<ReactMarkdown children={article.content} />
-				<div className="gallery mt-auto"><p>gallery here</p>
-				</div>
-			</section>
+			    <SimpleReactLightbox>
+					<section className="content article d-flex flex-column">
+						<div className="title-wrapper d-flex flex-row justify-content-between"><h2>{article.title}</h2><span>{article.number && article.number}</span></div>
+						<h4>{article.subtitle}</h4>
+						<hr />
+						<ReactMarkdown children={article.content} />
+						<div className="gallery mt-auto d-flex flex-row flex-nowrap">
+							<SRLWrapper options={options}>
+								{article.gallery.map( (item, index) => {
+									if (item.mime.startsWith("image")) {
+										return <img key={index} src={`http://localhost:1337${item.url}`} alt={item.caption}></img>
+									} else if (item.mime.startsWith("video")) {
+										return (
+											<video width="1280" height="1024" autoplay="false" controls="controls">
+   											<source src={`http://localhost:1337${item.url}`} type='video/mp4'></source>
+											</video>
+										)
+									}
+								})}
+							</SRLWrapper>
+						</div>
+					</section>
+				</SimpleReactLightbox>
 			</>
 		)
 	}
