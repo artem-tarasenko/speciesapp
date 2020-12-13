@@ -1,32 +1,9 @@
 import React, { useState, useEffect } from "react";
-import SimpleReactLightbox from "simple-react-lightbox";
-import { SRLWrapper } from "simple-react-lightbox";
 import ReactMarkdown from "react-markdown";
+import ReactGallery from 'reactive-blueimp-gallery';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
-//a set of options declared for Ligthbox gallery, full list on NpmJs - simple react lightbox
-const options = {
-  settings: {
-    overlayColor: "rgb(30 36 43 / 91%);",
-    autoplaySpeed: 1500,
-	transitionSpeed: 900,
-	hideControlsAfter: false,
-
-  },
-  buttons: {
-    backgroundColor: "#1b5245",
-	iconColor: "rgba(126, 172, 139, 0.8)",
-	showAutoplayButton: false,
-	showDownloadButton: false,
-	showFullscreenButton: false,
-	showThumbnailsButton: false
-  },
-  caption: {
-    captionColor: "#a6cfa5",
-    captionFontFamily: "Raleway, sans-serif",
-    captionFontWeight: "300",
-    captionTextTransform: "uppercase",
-  }
-};
 
 //fetch data from URL passed by calling func, with effect hook should be updated only when on URL change
 const useFetch = url => {
@@ -41,7 +18,6 @@ const useFetch = url => {
     useEffect(() => {fetchData()}, [url]);
     return data;
 }
-
 
 function RenderSingleArticle(props) {
 	//props  ###  match - object from Router with some data ###  article - source object  ###
@@ -61,34 +37,83 @@ function RenderSingleArticle(props) {
 			article = props.article;
 		}
 
+		//reforming article.gallery array to prepare it to be rendered by ReactGallery with additional condition
+		//about what type of content is there picture of video file, since ReactGallery has a different layout for them
+		const galleryItems = article.gallery.map( item => {
+			if (item.mime === "video/mp4") {
+				return {
+					href: "http://localhost:1337" + item.url,
+					type: item.mime,
+					poster: 'http://localhost:1337/uploads/video_thumb_2130e846b4.jpg',
+					'data-poster': 'http://localhost:1337/uploads/video_cover_99577ae76e.jpg'
+				};
+			} else if (item.mime === "image/jpeg") {
+				return {
+					href: "http://localhost:1337" + item.url,
+					type: item.mime,
+					thumbnail: "http://localhost:1337" + item.formats.thumbnail.url,
+				};
+			}
+		})
+		let navClasses="gallery-nav";
+
+		if (galleryItems.length <= 4) {
+			navClasses = "gallery-nav disabled";
+		}
+
+		//here should be a function to control slider scroll
+		function sliderMoveLeft(event) {
+			// event.preventDefault;
+			let galleryBody = document.querySelector(".testing-thumbnails");
+			let position = parseInt(window.getComputedStyle(galleryBody,null).getPropertyValue("left"), 10);
+			
+			galleryBody.style.left = (position < 0) && position + 500 + "px";
+
+			console.log(position);
+		}
+
+		function sliderMoveRight(event) {
+			// event.preventDefault;
+			let galleryBody = document.querySelector(".testing-thumbnails");
+			let position = parseInt(window.getComputedStyle(galleryBody,null).getPropertyValue("left"), 10);
+			let limit = (galleryBody.children.length - 4) * -250;
+
+			galleryBody.style.left = (position > limit) && position - 500 + "px";
+
+			console.log(position);
+			console.log(limit);
+		}
+
 		return (
 			<>
-			    <SimpleReactLightbox>
 					<section className="content article d-flex flex-column">
 						<div className="title-wrapper d-flex flex-row justify-content-between"><h2>{article.title}</h2><span>{article.number && article.number}</span></div>
 						<h4>{article.subtitle}</h4>
 						<hr />
 						<ReactMarkdown children={article.content} />
-						<div className="gallery mt-auto d-flex flex-row flex-nowrap">
-							<SRLWrapper options={options}>
-								{article.gallery.map( (item, index) => {
-									if (item.mime.startsWith("image")) {
-										return <img key={index} src={`http://localhost:1337${item.url}`} alt={item.caption}></img>
-									} else if (item.mime.startsWith("video")) {
-										return (
-											<video width="1280" height="1024" autoplay="false" controls="controls">
-   											<source src={`http://localhost:1337${item.url}`} type='video/mp4'></source>
-											</video>
-										)
-									}
-								})}
-							</SRLWrapper>
+						<div className="gallery mt-auto">
+							<div className={navClasses}>
+								<a href="#" className="carousel-arrow nav-left" onClick={sliderMoveLeft}>
+									<NavigateBeforeIcon fontSize="large" />
+								</a>
+								<a href="#" className="carousel-arrow nav-right" onClick={sliderMoveRight}>
+									<NavigateNextIcon />
+								</a>
+							</div>
+							<div className="gallery-wrapper">
+								<ReactGallery withControls className="testing" onclick="dp" >
+									{ galleryItems.map((item) => {
+										return <ReactGallery.Slide {...item} key={ item.href } className="gallery-item" />;
+									})}
+								</ReactGallery>
+							</div>
 						</div>
 					</section>
-				</SimpleReactLightbox>
 			</>
 		)
 	}
 }
+
+
 
 export default RenderSingleArticle;
