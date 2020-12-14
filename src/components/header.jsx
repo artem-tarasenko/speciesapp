@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Header() {
     return (
-        <header className="d-flex">
+        <header className="d-flex header">
             <div className="bg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="586.64" height="99.74" viewBox="0 0 586.64 99.74">
                     <g id="Слой_2" data-name="Слой 2">
