@@ -31,7 +31,6 @@ function Home() {
         return <section className="container"><p>Wait, loading...</p></section>
     } else {
         //setting up root categories to render 1st level with categories for 2 parts
-		console.log(data);
         let firstPartTitle = "ТРОПИЧЕСКИЙ ЗАЛ";
         let secondPartTitle = "ДАЛЬНЕВОСТОЧНЫЙ ЗАЛ";
         const firstRootCategory = data.find(item => item.title === firstPartTitle);

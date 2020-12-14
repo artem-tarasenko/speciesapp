@@ -55,33 +55,28 @@ function RenderSingleArticle(props) {
 				};
 			}
 		})
-		let navClasses="gallery-nav";
 
-		if (galleryItems.length <= 4) {
-			navClasses = "gallery-nav disabled";
-		}
+		let navClasses="gallery-nav";
+			if (galleryItems.length <= 4) {
+				navClasses = "gallery-nav disabled";
+			}
 
 		//here should be a function to control slider scroll
 		function sliderMoveLeft(event) {
 			// event.preventDefault;
 			let galleryBody = document.querySelector(".testing-thumbnails");
 			let position = parseInt(window.getComputedStyle(galleryBody,null).getPropertyValue("left"), 10);
-			
-			galleryBody.style.left = (position < 0) && position + 500 + "px";
 
-			console.log(position);
+			galleryBody.style.left = (position < 0) && position + 450 + "px";
 		}
 
 		function sliderMoveRight(event) {
 			// event.preventDefault;
 			let galleryBody = document.querySelector(".testing-thumbnails");
 			let position = parseInt(window.getComputedStyle(galleryBody,null).getPropertyValue("left"), 10);
-			let limit = (galleryBody.children.length - 4) * -250;
+			let limit = (galleryBody.children.length - 4) * -280;
 
-			galleryBody.style.left = (position > limit) && position - 500 + "px";
-
-			console.log(position);
-			console.log(limit);
+			galleryBody.style.left = (position > limit) && position - 450 + "px";
 		}
 
 		return (
