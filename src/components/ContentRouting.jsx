@@ -131,7 +131,7 @@ function Article({match}) {
     return (
         <>
             {match.isExact && (
-				<RenderSingleArticle match={match} />
+				<RenderSingleArticle match={match} gallery={true} />
             )}
         </>
     )

@@ -77,7 +77,7 @@ function ConditionalContentRender(props) {
 			)
 		} else if (parent.hasOwnProperty("description")) {
 			//console.log("ConditionalContentRender(): rendering description...");
-			return <RenderSingleArticle article={parent.description} />
+			return <RenderSingleArticle article={parent.description} gallery={true} />
 
 		} else {
 			console.log("Parent category does not have any description, or article does not found");

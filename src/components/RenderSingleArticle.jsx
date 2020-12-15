@@ -4,8 +4,8 @@ import ReactGallery from 'reactive-blueimp-gallery';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 
+import RenderGallery from "./RenderGallery";
 
-//fetch data from URL passed by calling func, with effect hook should be updated only when on URL change
 const useFetch = url => {
     const [data, setData] = useState(null);
 
@@ -16,11 +16,26 @@ const useFetch = url => {
     }
 
     useEffect(() => {fetchData()}, [url]);
+
     return data;
 }
 
+// function RenderArticlePreview(props) {
+// 	//props - article (obj)
+// 	console.log(props.article);
+// 	if (props.article.hasOwnProperty("title")) {
+// 		console.log(props.article);
+// 		return (
+//
+// 		)
+// 	} else {
+// 		return <p>nothing to show</p>
+// 	}
+// }
+
+
 function RenderSingleArticle(props) {
-	//props  ###  match - object from Router with some data ###  article - source object  ###
+	//props  ###  match - object from Router with some data ###  article - source object  ### number from search ### gallery - bool
 	//getting starting data from mongo through Strapi API
 	const data = useFetch("http://localhost:1337/articles");
 
@@ -31,78 +46,25 @@ function RenderSingleArticle(props) {
 	} else {
 		let article;
 		//conditional to allow the component to be used with different props (either parent ID or target category object)
-		if (!props.article) {
-			article = data.find( art => props.match.params.article === art.id );
-		} else {
+		if (props.article) {
 			article = props.article;
-		}
-
-		//reforming article.gallery array to prepare it to be rendered by ReactGallery with additional condition
-		//about what type of content is there picture of video file, since ReactGallery has a different layout for them
-		const galleryItems = article.gallery.map( item => {
-			if (item.mime === "video/mp4") {
-				return {
-					href: "http://localhost:1337" + item.url,
-					type: item.mime,
-					poster: 'http://localhost:1337/uploads/video_thumb_2130e846b4.jpg',
-					'data-poster': 'http://localhost:1337/uploads/video_cover_99577ae76e.jpg'
-				};
-			} else if (item.mime === "image/jpeg") {
-				return {
-					href: "http://localhost:1337" + item.url,
-					type: item.mime,
-					thumbnail: "http://localhost:1337" + item.formats.thumbnail.url,
-				};
-			}
-		})
-
-		let navClasses="gallery-nav";
-			if (galleryItems.length <= 4) {
-				navClasses = "gallery-nav disabled";
-			}
-
-		//here should be a function to control slider scroll
-		function sliderMoveLeft(event) {
-			// event.preventDefault;
-			let galleryBody = document.querySelector(".testing-thumbnails");
-			let position = parseInt(window.getComputedStyle(galleryBody,null).getPropertyValue("left"), 10);
-
-			galleryBody.style.left = (position < 0) && position + 450 + "px";
-		}
-
-		function sliderMoveRight(event) {
-			// event.preventDefault;
-			let galleryBody = document.querySelector(".testing-thumbnails");
-			let position = parseInt(window.getComputedStyle(galleryBody,null).getPropertyValue("left"), 10);
-			let limit = (galleryBody.children.length - 4) * -280;
-
-			galleryBody.style.left = (position > limit) && position - 450 + "px";
+		// } else if (props.number) {
+		// 	article = data.find( art => props.number === art.number );
+		} else if (props.match){
+			article = data.find( art => props.match.params.article === art.id );
 		}
 
 		return (
 			<>
 					<section className="content article d-flex flex-column">
-						<div className="title-wrapper d-flex flex-row justify-content-between"><h2>{article.title}</h2><span>{article.number && article.number}</span></div>
-						<h4>{article.subtitle}</h4>
-						<hr />
-						<ReactMarkdown children={article.content} />
-						<div className="gallery mt-auto">
-							<div className={navClasses}>
-								<a href="#" className="carousel-arrow nav-left" onClick={sliderMoveLeft}>
-									<NavigateBeforeIcon fontSize="large" />
-								</a>
-								<a href="#" className="carousel-arrow nav-right" onClick={sliderMoveRight}>
-									<NavigateNextIcon />
-								</a>
-							</div>
-							<div className="gallery-wrapper">
-								<ReactGallery withControls className="testing" onclick="dp" >
-									{ galleryItems.map((item) => {
-										return <ReactGallery.Slide {...item} key={ item.href } className="gallery-item" />;
-									})}
-								</ReactGallery>
-							</div>
+						<div className="title-wrapper d-flex flex-row justify-content-between">
+							<h2>{article.title}</h2>
+							<span>{article.number && article.number}</span>
 						</div>
+						<h4>{article.subtitle}</h4>
+							<hr />
+							<ReactMarkdown children={article.content} />
+							{props.gallery && <RenderGallery article={article} />}
 					</section>
 			</>
 		)
@@ -112,3 +74,4 @@ function RenderSingleArticle(props) {
 
 
 export default RenderSingleArticle;
+// export { RenderArticlePreview };
