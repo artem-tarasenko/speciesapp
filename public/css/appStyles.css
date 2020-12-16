@@ -39,9 +39,9 @@ content: "";
     z-index: 10;
 }
 
-.hidden {
+/* .hidden {
     display: none !important;
-}
+} */
 
 body {
     background-image: url(/images/bg.jpg);
@@ -381,9 +381,29 @@ section h3 {
     color: white;
 	margin: 30px 0 20px 40px;
 }
+.search-result .search-result-title, .search-result .search-result-item {
+	position: relative;
+	top: 0px;
+	opacity: 1;
+	transition: all 0.1s ease;
+}
+
+.search-result.hidden .search-result-title, .search-result.hidden .search-result-item {
+	top: 100px;
+	opacity: 0;
+	transition: all 0.1s ease;
+}
+.search-result .search-result-item {
+	transition: all 0.4s ease 0.1s;
+}
+.search-result .search-result-title {
+	transition: all 0.4s ease;
+}
 
 .search-result .article-preview {
-	padding: 20px 0px;
+	padding: 20px 10px;
+	margin: 30px 0;
+	box-shadow: 4px 1px 12px -2px #21212f;
 }
 
 .article-preview .article-thumb {

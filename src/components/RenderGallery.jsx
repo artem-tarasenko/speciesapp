@@ -62,7 +62,7 @@ export default function RenderGallery(props) {
 				</a>
 			</div>
 			<div className="gallery-wrapper">
-				<ReactGallery withControls className="testing" onclick="dp" >
+				<ReactGallery withControls>
 					{ galleryItems.map((item) => {
 						return <ReactGallery.Slide {...item} key={ item.href } className="gallery-item" />;
 					})}
