@@ -30,12 +30,12 @@ export default function RenderGallery(props) {
 		if (galleryItems.length <= 4) {
 			navClasses = "gallery-nav disabled";
 		}
-
+	
 
 	//here should be a function to control slider scroll
 	function sliderMoveLeft(event) {
 		// event.preventDefault;
-		let galleryBody = document.querySelector(".testing-thumbnails");
+		let galleryBody = document.querySelector(".gallery-thumbnails");
 		let position = parseInt(window.getComputedStyle(galleryBody,null).getPropertyValue("left"), 10);
 
 		galleryBody.style.left = (position < 0) && position + 450 + "px";
@@ -43,9 +43,9 @@ export default function RenderGallery(props) {
 
 	function sliderMoveRight(event) {
 		// event.preventDefault;
-		let galleryBody = document.querySelector(".testing-thumbnails");
+		let galleryBody = document.querySelector(".gallery-thumbnails");
 		let position = parseInt(window.getComputedStyle(galleryBody,null).getPropertyValue("left"), 10);
-		let limit = (galleryBody.children.length - 4) * -280;
+		let limit = (galleryBody.children.length - 4) * -250;
 
 		galleryBody.style.left = (position > limit) && position - 450 + "px";
 	}
@@ -53,7 +53,7 @@ export default function RenderGallery(props) {
 
 	return (
 		<div className="gallery mt-auto">
-			<div className="gallery-nav">
+			<div className={navClasses}>
 				<a href="#" className="carousel-arrow nav-left" onClick={sliderMoveLeft}>
 					<NavigateBeforeIcon fontSize="large" />
 				</a>
@@ -62,7 +62,7 @@ export default function RenderGallery(props) {
 				</a>
 			</div>
 			<div className="gallery-wrapper">
-				<ReactGallery withControls>
+				<ReactGallery withControls className="gallery">
 					{ galleryItems.map((item) => {
 						return <ReactGallery.Slide {...item} key={ item.href } className="gallery-item" />;
 					})}
