@@ -25,18 +25,9 @@ export default function Footer() {
 	const [value, setValue] = useState("");
 	const [article, setArticle] = useState();
 
-	const catData = useFetch("http://localhost:1337/categories");
 	const data = useFetch("http://localhost:1337/articles");
-
-	const inputField = document.querySelector("#search-input"); //obj
 	const resultTitle = document.querySelector(".search-result-title");
-	
-
-	console.group("initial data: value # Article # link");
-	console.log(value);
-	console.log(article);
-	console.log(link);
-	console.groupEnd();
+	let inputField;
 
 //==============================================================================
 	function toggleSearch() {
@@ -74,9 +65,14 @@ export default function Footer() {
 		let searchString = "D" + value;
 		let newArticle = data.find( item => item.number === searchString );
 
+		if (!newArticle) {
+			return
+		}
+
 		let pathArray = [];
 		let pathCategory;
 		let pathSubcategory;
+		let pathArticle = newArticle.id;
 
 		if (newArticle.hasOwnProperty("parentCategory")) {
 			if (newArticle.parentCategory.hasOwnProperty("parentCategory")) {
@@ -90,7 +86,6 @@ export default function Footer() {
 		} else {
 			console.log("Error - Searching engine has found an article but it does not belong to any category. Check this category in Strapi admin panel.");
 		}
-		let pathArticle = newArticle.id;
 
 		pathCategory && pathArray.push(pathCategory);
 		pathSubcategory && pathArray.push(pathSubcategory);
@@ -103,21 +98,30 @@ export default function Footer() {
 //==============================================================================
 	function handleInput(event) {
 		//setting limit "3" to number input and updating input value with button clicks
+		inputField = document.querySelector("#search-input"); //obj
+
 		if (value.length < 3) {
 			let newValue = value + event.target.id;
+			// console.log("event target id: " + event.target.id);
+			// console.log("newValue: " + newValue);
+			// console.log(typeof(newValue));
 			inputField.value = newValue;
 			setValue(newValue);
 		} else {
 			//clean input field or block input
+			ClearSearch();
 		}
 	}
 //==============================================================================
 	function ClearSearch() {
 		//find and store input field that will show user input from buttons
 		//find and store resulting title object to modify text
+		inputField = document.querySelector("#search-input"); //obj
 		document.querySelector(".search-result").classList.add("hidden");
 		inputField.value = "";
 		setValue("");
+		setArticle();
+		setLink("/");
 	}
 //==============================================================================
 
@@ -164,8 +168,9 @@ export default function Footer() {
 					<div className="search-result hidden">
 						<h3 className="search-result-title">РЕЗУЛЬТАТЫ ПОИСКА</h3>
 						<div className="search-result-item">
-						
-						{ article && <div className="article-preview d-flex flex-row">
+
+						{ article ? <Link to={link} onClick={toggleSearch} className="mt-auto">
+							<div className="article-preview d-flex flex-row">
 								<div className="article-thumb">
 									<img src={"http://localhost:1337" + article.cover.formats.thumbnail.url} />
 								</div>
@@ -173,10 +178,11 @@ export default function Footer() {
 									<p>{article.number}</p>
 									<h3>{article.title}</h3>
 									<h5>{article.subtitle}</h5>
-									<Link to={link} onClick={toggleSearch}>LINK</Link>
+
 								</div>
-							</div>
-						}	
+
+							</div></Link> : <h4>Записей не найдено</h4>
+						}
 
 						</div>
 					</div>
@@ -186,5 +192,3 @@ export default function Footer() {
 	    );
 	}
 }
-
-
