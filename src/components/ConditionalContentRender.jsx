@@ -63,7 +63,7 @@ function ConditionalContentRender(props) {
 				<>
 				{match.isExact && (
 					<>
-						<section className="content categories">
+						<section className="content categories mCustomScrollbar">
 							<div className="d-flex d-row flex-wrap">
 								{parent.articles.map( obj => <CategoryItem key={obj.id} category={obj} url={`${match.url}/${obj.id}`} /> )}
 							</div>

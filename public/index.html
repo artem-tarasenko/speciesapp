@@ -4,12 +4,14 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/css/appStyles.css">
-	<link rel="stylesheet" href="%PUBLIC_URL%/css/bootstrap.css">
+    <link rel="stylesheet" href="%PUBLIC_URL%/css/appStyles.css">
+  <link rel="stylesheet" href="%PUBLIC_URL%/css/bootstrap.css">
+  <link rel="stylesheet" href="%PUBLIC_URL%/css/jquery.mCustomScrollbar.css" />
 
-	<script src="%PUBLIC_URL%/js/css/popper.min.js" charset="utf-8"></script>
-	<script src="%PUBLIC_URL%/js/css/jquery-3.2.1.slim.min.js" charset="utf-8"></script>
-	<script src="%PUBLIC_URL%/js/css/bootstrap.min.js" charset="utf-8"></script>
+	<script src="%PUBLIC_URL%/js/popper.min.js" charset="utf-8"></script>
+	<script src="%PUBLIC_URL%/js/jquery-3.2.1.slim.min.js" charset="utf-8"></script>
+  <script src="%PUBLIC_URL%/js/bootstrap.min.js" charset="utf-8"></script>
+  <script src="%PUBLIC_URL%/js/jquery.mCustomScrollbar.concat.min.js" charset="utf-8"></script>
 
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -35,5 +37,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      (function ($) {
+        $(window).on("load", function () {
+          $(".content").mCustomScrollbar();
+        });
+      })(jQuery);
+    </script>
   </body>
 </html>
