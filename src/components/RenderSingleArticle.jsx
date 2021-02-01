@@ -59,7 +59,7 @@ function RenderSingleArticle(props) {
 					<section className="content article d-flex flex-column">
 						<div className="title-wrapper d-flex flex-row justify-content-between">
 							<h2>{article.title}</h2>
-							<span>{article.number && article.number}</span>
+							{article.number && <span>{article.number}</span>}
 						</div>
 						<h4>{article.subtitle}</h4>
 							<hr />
