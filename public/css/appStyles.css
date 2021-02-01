@@ -177,11 +177,7 @@ section h3 {
 .content {
     min-height: 75%;
     max-width: 1200px;
-<<<<<<< HEAD
     max-height: 810px;
-=======
-    max-height: 800px;
->>>>>>> 2e4f3adee1965679bdf20994477b70374f423c71
     overflow: hidden;
     overflow-y: auto;
     scroll
