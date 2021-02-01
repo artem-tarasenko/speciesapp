@@ -30,11 +30,9 @@ function Home() {
     if (!data) {
         return <section className="container"><p>Wait, loading...</p></section>
     } else {
-        //setting up root categories to render 1st level with categories for 2 parts
-        let firstPartTitle = "ТРОПИЧЕСКИЙ ЗАЛ";
-        let secondPartTitle = "ДАЛЬНЕВОСТОЧНЫЙ ЗАЛ";
-        const firstRootCategory = data.find(item => item.title === firstPartTitle);
-        const secondRootCategory = data.find(item => item.title === secondPartTitle);
+        //setting up root categories to render 1st level with categories for 2 parts, using bools to find rightParent and LeftParent
+        const firstRootCategory = data.find(item => item.RightParent === true);
+        const secondRootCategory = data.find(item => item.LeftParent === true);
 
         //mapping through arrays with children categories to render each one as a component with props
         //params: url - for Router Link; category - a source object for component to work with
