@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import {Switch, Route, Link} from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Home from "./Home";
 import RenderSingleArticle from "./RenderSingleArticle";
 import ConditionalContentRender from "./ConditionalContentRender";
+
 
 const useFetch = url => {
     const [data, setData] = useState(null);
@@ -20,12 +23,14 @@ const useFetch = url => {
     return data;
 }
 
+
+
 function Breadcrumbs() {
     let table = "categories";
     let data = useFetch("http://localhost:1337/" + table);
 
 	if (!data) {
-		return <section className="container"><p>Wait, loading...</p></section>
+		return <section className="container"><div className="loader"><CircularProgress /></div></section>
 	} else {
 
         return <Route path="*" render={props => {

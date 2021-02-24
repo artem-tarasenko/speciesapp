@@ -3,6 +3,8 @@ import {Switch, Route, Link} from "react-router-dom";
 import {Subcategory, Article} from "./ContentRouting"
 import CategoryItem from "./CategoryItem";
 import RenderSingleArticle from "./RenderSingleArticle";
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useFetch = url => {
     const [data, setData] = useState(null);
@@ -13,31 +15,43 @@ const useFetch = url => {
         setData(json);
     }
 
-    useEffect(() => {fetchData()}, [url]);
+	useEffect(() => {fetchData()}, [url]);
+	
+	console.log("USE FETCH");
+	console.log(data);
 
     return data;
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
 
 
 function ConditionalContentRender(props) {
 	const data = useFetch("http://localhost:1337/" + props.type);
 	let match = props.match;
 
+	const classes = useStyles();
+
 	if (!data) {
-		return <section className="container"><p>Wait, loading...</p></section>
+		return <div className="loader"><CircularProgress /></div>
 	} else {
+
+		// console.group('###########');
+		// 	console.log("http://localhost:1337/" + props.type);
+		// 	console.log(match);
+		// 	console.log(data);
+		// console.groupEnd();
+
+
 		let test = match.url.split("/");
 		let parent = data.find( item => item.id === test[test.length - 1]);
-
-		// console.groupCollapsed("DEBUGING CONDITIONAL RENDER")
-			// console.log("Parent variable before checking conditions what does it have");
-			// console.log(parent);
-			// console.log("props.match");
-			// console.log(match);
-			// console.log("Trying to get last ID from match params url");
-			// console.log(match.url.split("/"));
-			// console.log(test);
-		// console.groupEnd();
 
 	   	if (parent.subcategories.length > 0) {
 			//console.log("ConditionalContentRender(): rendering subcategories...");

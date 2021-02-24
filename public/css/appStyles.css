@@ -88,6 +88,7 @@ header h1 {
 nav a, nav p.link {
     color: var(--main-text-color);
     text-transform: uppercase;
+    line-height: 3rem;
 }
 nav p {
 	min-height: 42px;
@@ -180,7 +181,7 @@ section h3 {
     max-height: 810px;
     overflow: hidden;
     overflow-y: auto;
-    scroll
+    /* scroll */
 }
 
 .content .title-wrapper span {
@@ -354,9 +355,6 @@ section h3 {
 .footer-header .search-btn h3{
     margin: 0;
 }
-.footer-header .search-btn .search-icon {
-
-}
 
 .footer-panel .input-group {
 	width: 29%;
@@ -376,9 +374,7 @@ section h3 {
 	width: 70px;
 	height: 60px;
 }
-.clear-btn {
 
-}
 .input-btn:focus ,
 .clear-btn:focus {
 	outline: none;
@@ -436,6 +432,12 @@ section h3 {
     text-shadow: 1px 1px 3px black;
 }
 
+.loader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 
 

@@ -3,6 +3,8 @@ import ReactMarkdown from "react-markdown";
 import ReactGallery from 'reactive-blueimp-gallery';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import RenderGallery from "./RenderGallery";
 
@@ -19,6 +21,15 @@ const useFetch = url => {
 
     return data;
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
 
 // function RenderArticlePreview(props) {
 // 	//props - article (obj)
@@ -37,12 +48,21 @@ const useFetch = url => {
 function RenderSingleArticle(props) {
 	//props  ###  match - object from Router with some data ###  article - source object  ### number from search ### gallery - bool
 	//getting starting data from mongo through Strapi API
-	const data = useFetch("http://localhost:1337/articles");
+	let link;
+	const classes = useStyles();
+	
+	if(!props.article) {
+		link = "http://localhost:1337/articles?id=" + props.match.params.article;
+	} else {
+		link = "http://localhost:1337/articles?id=" + props.article;
+	}
+
+	const data = useFetch(link);
 
 	//short conditional to prevent the following code from executing before getting data from API
 	//since it's based on data object
 	if (!data) {
-		return <section className="content"><p>Wait, loading...</p></section>
+		return <section className="content"><div className="loader"><CircularProgress /></div></section>
 	} else {
 		let article;
 		//conditional to allow the component to be used with different props (either parent ID or target category object)
@@ -58,10 +78,10 @@ function RenderSingleArticle(props) {
 			<>
 					<section className="content article d-flex flex-column">
 						<div className="title-wrapper d-flex flex-row justify-content-between">
-							<h2>{article.title}</h2>
+							<h2>{article.subtitle.length > 0 ? article.subtitle : article.title}</h2>
 							{article.number && <span>{article.number}</span>}
 						</div>
-						<h4>{article.subtitle}</h4>
+							<h4>{article.title !== article.subtitle ? article.title : null}</h4>
 							<hr />
 							<ReactMarkdown children={article.content} />
 							{props.gallery && <RenderGallery article={article} />}
