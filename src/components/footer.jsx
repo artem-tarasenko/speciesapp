@@ -26,6 +26,11 @@ export default function Footer() {
 	const [article, setArticle] = useState();
 
 	const data = useFetch("http://localhost:1337/articles");
+	let searchStatus = useFetch("http://localhost:1337/settings");
+	if(searchStatus) {
+		searchStatus = searchStatus[0].Search;
+	}
+	console.log("search is - ", searchStatus);
 	const resultTitle = document.querySelector(".search-result-title");
 	let inputField;
 
@@ -138,56 +143,70 @@ export default function Footer() {
 				</button>)
 		}
 
-		console.log(article);
+		// console.log(article);
 	    return (
 	        <React.Fragment>
 				<footer className="footer d-flex flex-column">
-				<div className="footer-header d-flex flex-row justify-content-between pr-5 pl-5">
-					<div className="search">
-						<button className="search-btn d-flex flex-row" onClick={toggleSearch}>
-							<CloseIcon fontSize="large" className="search-icon hidden" />
-							<SearchIcon fontSize="large" className="search-icon" />
-							<h3 className="search-title">ПОИСК ПО НОМЕРУ</h3>
-						</button>
-					</div>
-					<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
-						<p>ТИХООКЕАНСКИЙ ФИЛИАЛ ФГБНУ "ВНИРО"</p>
-					</div>
-				</div>
-				<div className="footer-panel d-flex flex-row">
-					<div className="input-group pr-5 pl-5 mt-4">
-						<input disabled type="text" name="number" id="search-input" />
-						<div className="d-flex flex-column align-items-between">
-							<button className="clear-btn m-2" onClick={InitSearch}><p className="label">НАЙТИ</p></button>
-							<button className="clear-btn m-2" onClick={ClearSearch}><p className="label">ОЧИСТИТЬ</p></button>
+				{ searchStatus ? 
+					<React.Fragment>
+						<div className="footer-header d-flex flex-row justify-content-between pr-5 pl-5">
+							<div className="search">
+								<button className="search-btn d-flex flex-row" onClick={toggleSearch}>
+									<CloseIcon fontSize="large" className="search-icon hidden" />
+									<SearchIcon fontSize="large" className="search-icon" />
+									<h3 className="search-title">ПОИСК ПО НОМЕРУ</h3>
+								</button>
+							</div>
+							<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+								<p>ТИХООКЕАНСКИЙ ФИЛИАЛ ФГБНУ "ВНИРО"</p>
+							</div>
 						</div>
-						<div className="buttons d-flex flex-row flex-wrap justify-content-around">
-							{buttons}
-						</div>
-					</div>
-					<div className="search-result hidden">
-						<h3 className="search-result-title">РЕЗУЛЬТАТЫ ПОИСКА</h3>
-						<div className="search-result-item">
 
-						{ article ? <Link to={link} onClick={toggleSearch} className="mt-auto">
-							<div className="article-preview d-flex flex-row">
-								<div className="article-thumb">
-									<img src={"http://localhost:1337" + article.cover.formats.thumbnail.url} />
+				
+						<div className="footer-panel d-flex flex-row">
+							<div className="input-group pr-5 pl-5 mt-4">
+								<input disabled type="text" name="number" id="search-input" />
+								<div className="d-flex flex-column align-items-between">
+									<button className="clear-btn m-2" onClick={InitSearch}><p className="label">НАЙТИ</p></button>
+									<button className="clear-btn m-2" onClick={ClearSearch}><p className="label">ОЧИСТИТЬ</p></button>
 								</div>
-								<div className="article-preview-text d-flex flex-column">
-									<p>{article.number}</p>
-									<h3>{article.title}</h3>
-									<h5>{article.subtitle}</h5>
+								<div className="buttons d-flex flex-row flex-wrap justify-content-around">
+									{buttons}
+								</div>
+							</div>
+							<div className="search-result hidden">
+								<h3 className="search-result-title">РЕЗУЛЬТАТЫ ПОИСКА</h3>
+								<div className="search-result-item">
+
+								{ article ? <Link to={link} onClick={toggleSearch} className="mt-auto">
+									<div className="article-preview d-flex flex-row">
+										<div className="article-thumb">
+											<img src={"http://localhost:1337" + article.cover.formats.thumbnail.url} />
+										</div>
+										<div className="article-preview-text d-flex flex-column">
+											<p>{article.number}</p>
+											<h3>{article.title}</h3>
+											<h5>{article.subtitle}</h5>
+
+										</div>
+
+									</div></Link> : <h4>Записей не найдено</h4>
+								}
 
 								</div>
-
-							</div></Link> : <h4>Записей не найдено</h4>
-						}
-
+							</div>
 						</div>
-					</div>
-				</div>
+					</React.Fragment> : 
+					<React.Fragment>
+						<div className="footer-header d-flex flex-row justify-content-end pr-5 pl-5">
+							<div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center">
+								<p>ТИХООКЕАНСКИЙ ФИЛИАЛ ФГБНУ "ВНИРО"</p>
+							</div>
+						</div>
+					</React.Fragment>
+				}
 				</footer>
+				
 			</React.Fragment>
 	    );
 	}
