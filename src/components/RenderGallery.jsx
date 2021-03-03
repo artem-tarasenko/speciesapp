@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ReactGallery from 'reactive-blueimp-gallery';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import Url from "./Url.jsx";
 
 
 export default function RenderGallery(props) {
@@ -10,18 +11,20 @@ export default function RenderGallery(props) {
 	//reforming article.gallery array to prepare it to be rendered by ReactGallery with additional condition
 	//about what type of content is there picture of video file, since ReactGallery has a different layout for them
 	const galleryItems = props.article.gallery.map( item => {
+		console.log(Url);
+
 		if (item.mime === "video/mp4") {
 			return {
-				href: "http://localhost:1337" + item.url,
+				href: Url + item.url,
 				type: item.mime,
-				poster: 'http://localhost:1337/uploads/video_thumb_2130e846b4.jpg',
-				'data-poster': 'http://localhost:1337/uploads/video_cover_99577ae76e.jpg'
+				poster: `${Url}/uploads/video_thumb_2130e846b4.jpg`,
+				'data-poster': `${Url}/uploads/video_cover_99577ae76e.jpg`
 			};
-		} else if (item.mime === "image/jpeg") {
+		} else if (item.mime === "image/jpeg" || item.mime === "image/png") {
 			return {
-				href: "http://localhost:1337" + item.url,
+				href: Url + item.url,
 				type: item.mime,
-				thumbnail: "http://localhost:1337" + item.formats.thumbnail.url,
+				thumbnail: Url + item.formats.thumbnail.url,
 			};
 		}
 	})
@@ -63,8 +66,8 @@ export default function RenderGallery(props) {
 			</div>
 			<div className="gallery-wrapper">
 				<ReactGallery withControls className="gallery">
-					{ galleryItems.map((item) => {
-						return <ReactGallery.Slide {...item} key={ item.href } className="gallery-item" />;
+					{ galleryItems.map((item, index) => {
+						return <ReactGallery.Slide {...item} key={index} className="gallery-item" />;
 					})}
 				</ReactGallery>
 			</div>

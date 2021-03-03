@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
-import ReactGallery from 'reactive-blueimp-gallery';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import Url from "./Url.jsx";
 import RenderGallery from "./RenderGallery";
 
 const useFetch = url => {
@@ -22,39 +18,16 @@ const useFetch = url => {
     return data;
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    '& > * + *': {
-      marginLeft: theme.spacing(2),
-    },
-  },
-}));
-
-// function RenderArticlePreview(props) {
-// 	//props - article (obj)
-// 	console.log(props.article);
-// 	if (props.article.hasOwnProperty("title")) {
-// 		console.log(props.article);
-// 		return (
-//
-// 		)
-// 	} else {
-// 		return <p>nothing to show</p>
-// 	}
-// }
-
 
 function RenderSingleArticle(props) {
 	//props  ###  match - object from Router with some data ###  article - source object  ### number from search ### gallery - bool
 	//getting starting data from mongo through Strapi API
 	let link;
-	const classes = useStyles();
 	
 	if(!props.article) {
-		link = "http://localhost:1337/articles?id=" + props.match.params.article;
+		link = `${Url}/articles?id=` + props.match.params.article;
 	} else {
-		link = "http://localhost:1337/articles?id=" + props.article;
+		link = `${Url}/articles?id=` + props.article;
 	}
 
 	const data = useFetch(link);
@@ -92,6 +65,4 @@ function RenderSingleArticle(props) {
 }
 
 
-
 export default RenderSingleArticle;
-// export { RenderArticlePreview };

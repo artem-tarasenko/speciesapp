@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-
 import {Switch, Route, Link} from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
 import Home from "./Home";
 import RenderSingleArticle from "./RenderSingleArticle";
 import ConditionalContentRender from "./ConditionalContentRender";
+import Url from "./Url.jsx";
 
 
 const useFetch = url => {
@@ -27,7 +25,7 @@ const useFetch = url => {
 
 function Breadcrumbs() {
     let table = "categories";
-    let data = useFetch("http://localhost:1337/" + table);
+    let data = useFetch(Url + "/" + table);
 
 	if (!data) {
 		return <section className="container"><div className="loader"><CircularProgress /></div></section>
@@ -41,15 +39,8 @@ function Breadcrumbs() {
             //test if last ID in the path starts with "a" or not. If yes, then its an article
             //with ID like "a2" and it should be found in ArticlesDB
             //If not - ID is a number which means it's a category and could be found in Cat's DB
-
-            // place.startsWith("a") && searchForItem(ArticlesDB);
-            // !(place.startsWith("a")) && searchForItem(CategoriesDB);
-
-            // function searchForItem(source) {
-            //     lastCrumsItem = source.find( item => item.id == place)
-            // }
-
             //--------------------
+
             if (props.location.pathname === "/") {
                 return
             }
@@ -59,22 +50,6 @@ function Breadcrumbs() {
                 let tempPlace = data.find( item => item.id == parts[parts.length-1]);
                 lastCrumsItem = tempPlace.articles.find( item => item.id === place);
             }
-
-
-            // console.group("Breadbrubms pieces");
-            // console.log("place - ID of current item");
-            // console.log(place);
-            // console.log("lastCrumsItem - that should contain NAME of current element");
-            // console.log(lastCrumsItem);
-            // console.log("props.location.pathname - full path from Router");
-            // console.log(props.location.pathname);
-            // console.log("parts array - should have ID's from pathname after slicing empty ones");
-            // console.log(parts);
-            // console.log("API data from Strapi recieved for Router (categories array)");
-            // console.log(data);
-            // console.groupEnd();
-
-            //--------------------
 
             return (
                     <nav className="nav-menu d-flex flex-column">
@@ -92,26 +67,6 @@ function Breadcrumbs() {
 
 function Crumb(part, partIndex, parts) {
     const path = ['', ...parts.slice(0, partIndex+1)].join("/");
-
-    let partName = "Unnamed link";
-
-
-    // console.group("conditions and result");
-    // if (sourceDB.find(item => item.id == part).hasOwnProperty("subcategories")) {
-    //     // console.log("this one is with subcats!");
-    //     //get name in 1 source
-    // } else if (sourceDB.find(item => item.id == part).hasOwnProperty("articles")) {
-    //     // console.log("this one with articles!");
-    //     //get name in 1 source
-    // } else if (sourceDB.find(item => item.id == part).hasOwnProperty("description")) {
-    //     // console.log("this one with just a description!");
-    //     //sourceDB = data;
-    //     //get name in 1 source
-    // }
-    // console.groupEnd();
-
-    //look for a title
-    //partName = sourceDB.find(item => item.id == part).title;
 
     let linkName = data.find( item => item.id === part).title;
     return <p key={path}><Link to={path} >{linkName}</Link></p>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CategoryItem from "./CategoryItem";
+import Url from "./Url.jsx";
 
 
 //============================================================================
@@ -23,7 +24,7 @@ const useFetch = url => {
 
 function Home() {
     //getting starting data from mongo / API
-    const data = useFetch("http://localhost:1337/categories");
+    const data = useFetch(`${Url}/categories`);
 
     //short conditional to prevent the following code from executing before getting data from API
 	//since it's based on data object
@@ -59,4 +60,4 @@ function Home() {
     }
 }
 
-export default Home;
+export default Home; 

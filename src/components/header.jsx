@@ -13,7 +13,7 @@ export default function Header() {
             </div>
             <div className="d-flex overlay justify-content-between container-fluid align-items-center">
                 <img src="/images/logo.png" className="logo" alt="Tinro App" />
-                <h1>ИНТЕРАКТИВНЫЙ СПРАВОЧНИК ВИДОВ</h1>
+                <h1>ИНТЕРАКТИВНЫЙ СПРАВОЧНИК ВИДОВ</h1> 
             </div>
 
 		</header>

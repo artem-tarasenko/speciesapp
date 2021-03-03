@@ -1,16 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Url from "./Url.jsx";
 
 export default function CategoryItem(props) {
 	//props  ###  category: as a source of data  ###   url - complex string for Router Link
-	// console.log(props.category);
 
-	let link
+	let link; 
 
 	if (!props.category.cover) {
-		link = "http://localhost:1337/uploads/noimage.png";
+		link = `${Url}/uploads/noimage.png`;
 	} else {
-		link = "http://localhost:1337" + props.category.cover.url;
+		link = Url + props.category.cover.url;
 	}
 
     return (

@@ -4,7 +4,6 @@ import Footer from "./components/Footer";
 import {ContentRouting as Content} from "./components/ContentRouting";
 
 
-
 export default function App() {
   return (
 	<React.Fragment>

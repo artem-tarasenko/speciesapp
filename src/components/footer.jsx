@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
-// import {RenderArticlePreview} from "./RenderSingleArticle";
 import { Link } from "react-router-dom";
+import Url from "./Url.jsx";
 
 const useFetch = url => {
     const [data, setData] = useState(null);
@@ -18,19 +18,18 @@ const useFetch = url => {
     return data;
 }
 
-
-
 export default function Footer() {
 	const [link, setLink] = useState(["/"]);
 	const [value, setValue] = useState("");
 	const [article, setArticle] = useState();
 
-	const data = useFetch("http://localhost:1337/articles");
-	let searchStatus = useFetch("http://localhost:1337/settings");
+	const data = useFetch(`${Url}/articles`);
+	let searchStatus = useFetch(`${Url}/settings`);
 	if(searchStatus) {
 		searchStatus = searchStatus[0].Search;
 	}
-	console.log("search is - ", searchStatus);
+
+	//console.log("search is - ", searchStatus);
 	const resultTitle = document.querySelector(".search-result-title");
 	let inputField;
 
@@ -67,7 +66,7 @@ export default function Footer() {
 		document.querySelector(".search-result").classList.remove("hidden");
 
 		//search for an articles
-		let searchString = "D" + value;
+		let searchString = value;
 		let newArticle = data.find( item => item.number === searchString );
 
 		if (!newArticle) {

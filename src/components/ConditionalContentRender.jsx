@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {Switch, Route, Link} from "react-router-dom";
+import {Switch, Route} from "react-router-dom";
 import {Subcategory, Article} from "./ContentRouting"
 import CategoryItem from "./CategoryItem";
 import RenderSingleArticle from "./RenderSingleArticle";
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Url from "./Url.jsx";
 
 const useFetch = url => {
     const [data, setData] = useState(null);
@@ -23,32 +23,14 @@ const useFetch = url => {
     return data;
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    '& > * + *': {
-      marginLeft: theme.spacing(2),
-    },
-  },
-}));
-
 
 function ConditionalContentRender(props) {
-	const data = useFetch("http://localhost:1337/" + props.type);
+	const data = useFetch(Url + "/" + props.type);
 	let match = props.match;
-
-	const classes = useStyles();
 
 	if (!data) {
 		return <div className="loader"><CircularProgress /></div>
 	} else {
-
-		// console.group('###########');
-		// 	console.log("http://localhost:1337/" + props.type);
-		// 	console.log(match);
-		// 	console.log(data);
-		// console.groupEnd();
-
 
 		let test = match.url.split("/");
 		let parent = data.find( item => item.id === test[test.length - 1]);
@@ -77,7 +59,7 @@ function ConditionalContentRender(props) {
 				<>
 				{match.isExact && (
 					<>
-						<section className="content categories mCustomScrollbar">
+						<section className="content categories">
 							<div className="d-flex d-row flex-wrap">
 								{parent.articles.map( obj => <CategoryItem key={obj.id} category={obj} url={`${match.url}/${obj.id}`} /> )}
 							</div>
